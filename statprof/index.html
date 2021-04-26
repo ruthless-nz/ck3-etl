@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+    <title>StatProfilerHTML.jl: main report</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <object data="clickable_stacks_by_time.svg" width="90%" type="image/svg+xml" style="display: block" id="zoomable_flamegraph">
+        SVG not supported
+      </object>
+      <object data="zoomable_stacks_by_time.svg" width="90%" type="image/svg+xml" style="display: none" id="clickable_flamegraph">
+        SVG not supported
+      </object>
+      <div><a href="#" onclick="switch_flamegraph()">Switch flamegraph</a></div>
+      <br /><br />
+      <table>
+        <caption>Subroutines, sorted by exclusive sample count</caption>
+        <tr>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Subroutine</th>
+        </tr>
+
+        <tr>
+          <td>9288 (40.55%)</td>
+          <td>14596 (63.73%)</td>
+          <td>
+            <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-include-328">include</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>7390 (32.27%)</td>
+          <td>7390 (32.27%)</td>
+          <td>
+            <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-eval-329">eval</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>1827 (7.98%)</td>
+          <td>1827 (7.98%)</td>
+          <td>
+            <a href="iostream-jl-75890f59fa9fffda0059-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-iostream-jl-_read-429">_read</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>538 (2.35%)</td>
+          <td>540 (2.36%)</td>
+          <td>
+            <a href="task-jl-e5e94626ae5209943ca4-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-task-jl-poptaskref-562">poptaskref</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>446 (1.95%)</td>
+          <td>446 (1.95%)</td>
+          <td>
+            <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-Type-404">Type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>326 (1.42%)</td>
+          <td>328 (1.43%)</td>
+          <td>
+            <a href="Base-jl-4b16c93e1dccf95c6618-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-Base-jl-setproperty-20">setproperty!</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>238 (1.04%)</td>
+          <td>238 (1.04%)</td>
+          <td>
+            <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-read-404">read</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>232 (1.01%)</td>
+          <td>867 (3.79%)</td>
+          <td>
+            <a href="ZipFile-jl-98f0a48d44abb6205093-line.html#SC-Users-Tims-PC-julia-packages-ZipFile-DW0Qr-src-ZipFile-jl-_read-429">_read</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>171 (0.75%)</td>
+          <td>171 (0.75%)</td>
+          <td>
+            <a href="pointer-jl-693a1301a8bdfd4ec617-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-pointer-jl-unsafe_wrap-65-89">#unsafe_wrap#65</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>102 (0.45%)</td>
+          <td>102 (0.45%)</td>
+          <td>
+            <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-unsafe_wrap-71">unsafe_wrap</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>102 (0.45%)</td>
+          <td>102 (0.45%)</td>
+          <td>
+            <a href="reflection-jl-b1c1388f760d33eb1c09-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-reflection-jl-abstract_call_gf_by_type-20">abstract_call_gf_by_type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>95 (0.41%)</td>
+          <td>112 (0.49%)</td>
+          <td>
+            <a href="essentials-jl-d6a2f3305fb105b16b7f-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-essentials-jl-iterate-603">iterate</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>83 (0.36%)</td>
+          <td>83 (0.36%)</td>
+          <td>
+            <a href="pair-jl-30b312b844691c18d9aa-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-pair-jl-Type-12">Type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>77 (0.34%)</td>
+          <td>77 (0.34%)</td>
+          <td>
+            <a href="array-jl-5a33eab667063cb89d51-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-array-jl-_growend-811">_growend!</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>73 (0.32%)</td>
+          <td>73 (0.32%)</td>
+          <td>
+            <a href="ir-jl-47ea3967c768e15cbcbc-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-compiler-ssair-ir-jl-Type-263">Type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>63 (0.28%)</td>
+          <td>63 (0.28%)</td>
+          <td>
+            <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-Type-406">Type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>61 (0.27%)</td>
+          <td>61 (0.27%)</td>
+          <td>
+            <a href="reflection-jl-b1c1388f760d33eb1c09-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-reflection-jl-assemble_inline_todo-975">assemble_inline_todo!</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>54 (0.24%)</td>
+          <td>55 (0.24%)</td>
+          <td>
+            <a href="ck3_extract-jl-10838000bacbe83663b2-line.html#SC-Users-Tims-PC-OneDrive-Documents-julia-ck3_read-blocks-ck3_extract-jl-top-level-scope-104">top-level scope</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>42 (0.18%)</td>
+          <td>43 (0.19%)</td>
+          <td>
+            <a href="iterators-jl-1de4f48ae5ec2db746df-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-iterators-jl-iterate-137">iterate</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>41 (0.18%)</td>
+          <td>114 (0.50%)</td>
+          <td>
+            <a href="ir-jl-47ea3967c768e15cbcbc-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-compiler-ssair-ir-jl-iterate-1093">iterate</a>
+          </td>
+        </tr>
+      </table>
+      <a href="subs.html">All subroutines</a>
+      <br /><br />
+      <table>
+        <caption>Files, sorted by exclusive sample count</caption>
+        <tr>
+          <th>Exclusive</th>
+          <th>Report</th>
+        </tr>
+
+        <tr>
+          <td>17488 (76.36%)</td>
+          <td><a href="boot-jl-fedc2b778ea8a446fb45-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\boot.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>1844 (8.05%)</td>
+          <td><a href="iostream-jl-75890f59fa9fffda0059-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\iostream.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>538 (2.35%)</td>
+          <td><a href="task-jl-e5e94626ae5209943ca4-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\task.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>343 (1.50%)</td>
+          <td><a href="Base-jl-4b16c93e1dccf95c6618-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\Base.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>240 (1.05%)</td>
+          <td><a href="ZipFile-jl-98f0a48d44abb6205093-line.html">C:\Users\Tims PC\.julia\packages\ZipFile\DW0Qr\src\ZipFile.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>216 (0.94%)</td>
+          <td><a href="ir-jl-47ea3967c768e15cbcbc-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\compiler/ssair\ir.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>200 (0.87%)</td>
+          <td><a href="ck3_extract-jl-10838000bacbe83663b2-line.html">C:\Users\Tims PC\OneDrive\Documents\julia\ck3_read\blocks\ck3_extract.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>185 (0.81%)</td>
+          <td><a href="string-jl-33e19517945c5b865681-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\strings\string.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>182 (0.79%)</td>
+          <td><a href="reflection-jl-b1c1388f760d33eb1c09-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\reflection.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>180 (0.79%)</td>
+          <td><a href="pointer-jl-693a1301a8bdfd4ec617-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\pointer.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>155 (0.68%)</td>
+          <td><a href="array-jl-5a33eab667063cb89d51-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\array.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>136 (0.59%)</td>
+          <td><a href="essentials-jl-d6a2f3305fb105b16b7f-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\essentials.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>124 (0.54%)</td>
+          <td><a href="iterators-jl-1de4f48ae5ec2db746df-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\iterators.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>85 (0.37%)</td>
+          <td><a href="pair-jl-30b312b844691c18d9aa-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\pair.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>76 (0.33%)</td>
+          <td><a href="utilities-jl-eb49bdeaf44b899016e6-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\compiler\utilities.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>60 (0.26%)</td>
+          <td><a href="inlining-jl-5fe072cca207b95e05e2-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\compiler/ssair\inlining.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>59 (0.26%)</td>
+          <td><a href="substring-jl-9433afd4759d33128c70-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\strings\substring.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>58 (0.25%)</td>
+          <td><a href="tfuncs-jl-f106975e77c010f31298-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\compiler\tfuncs.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>57 (0.25%)</td>
+          <td><a href="Zlib-jl-80f348f93a519542adf2-line.html">C:\Users\Tims PC\.julia\packages\ZipFile\DW0Qr\src\Zlib.jl</a></td>
+        </tr>
+
+        <tr>
+          <td>56 (0.24%)</td>
+          <td><a href="abstractdict-jl-7f0882a50ea40bd51b6b-line.html">C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\abstractdict.jl</a></td>
+        </tr>
+      </table>
+      <a href="files.html">All files</a>
+    </div>
+    <script>
+function switch_flamegraph() {
+    var clickable = document.getElementById("clickable_flamegraph");
+    var zoomable = document.getElementById("zoomable_flamegraph");
+
+    var t = clickable.style.display;
+    clickable.style.display = zoomable.style.display;
+    zoomable.style.display = t;
+
+    return 0;
+}
+    </script>
+  </body>
+</html>

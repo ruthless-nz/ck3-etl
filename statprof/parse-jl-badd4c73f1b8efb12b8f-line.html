@@ -1,0 +1,3939 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\parse.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># This file is a part of Julia. License is MIT: https://julialang.org/license
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">import Base.Checked: add_with_overflow, mul_with_overflow
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## string to integer functions ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parse(type, str; base)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Parse a string as a number. For `Integer` types, a base can be specified
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">(the default is 10). For floating-point types, the string is parsed as a decimal
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">floating-point number.  `Complex` types are parsed from decimal strings
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">of the form `&quot;R±Iim&quot;` as a `Complex(R,I)` of the requested type; `&quot;i&quot;` or `&quot;j&quot;` can also be
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">used instead of `&quot;im&quot;`, and `&quot;R&quot;` or `&quot;Iim&quot;` are also permitted.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">If the string does not contain a valid number, an error is raised.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">!!! compat &quot;Julia 1.1&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    `parse(Bool, str)` requires at least Julia 1.1.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Examples
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; parse(Int, &quot;1234&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">1234
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; parse(Int, &quot;1234&quot;, base = 5)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-26"></a>26</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">194
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-27"></a>27</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-28"></a>28</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; parse(Int, &quot;afc&quot;, base = 16)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-29"></a>29</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">2812
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-30"></a>30</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-31"></a>31</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; parse(Float64, &quot;1.2e-3&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-32"></a>32</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">0.0012
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-33"></a>33</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-34"></a>34</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; parse(Complex{Float64}, &quot;3.2e-1 + 4.5im&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-35"></a>35</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">0.32 + 4.5im
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-36"></a>36</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-37"></a>37</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-38"></a>38</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">parse(T::Type, str; base = Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-39"></a>39</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-40"></a>40</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function parse(::Type{T}, c::AbstractChar; base::Integer = 10) where T&lt;:Integer
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-41"></a>41</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    a::Int = (base &lt;= 36 ? 10 : 36)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-42"></a>42</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    2 &lt;= base &lt;= 62 || throw(ArgumentError(&quot;invalid base: base must be 2 ≤ base ≤ 62, got $base&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-43"></a>43</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d = &#39;0&#39; &lt;= c &lt;= &#39;9&#39; ? c-&#39;0&#39;    :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-44"></a>44</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        &#39;A&#39; &lt;= c &lt;= &#39;Z&#39; ? c-&#39;A&#39;+10 :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-45"></a>45</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        &#39;a&#39; &lt;= c &lt;= &#39;z&#39; ? c-&#39;a&#39;+a  : throw(ArgumentError(&quot;invalid digit: $(repr(c))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-46"></a>46</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d &lt; base || throw(ArgumentError(&quot;invalid base $base digit $(repr(c))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-47"></a>47</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    convert(T, d)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-48"></a>48</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-49"></a>49</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-50"></a>50</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parseint_iterate-50"></a>
+              1 (0.0044%) samples spent in parseint_iterate<br />
+              1 (100.00%) (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              parseint_preamble
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#Lparse-jl-badd4c73f1b8efb12b8f-line.html-58">line 58</a><br />
+            </div>
+            <span class="code">function parseint_iterate(s::AbstractString, startpos::Int, endpos::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-51"></a>51</td>
+          <td>1 (0.0044%)</td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <span class="code">    (0 &lt; startpos &lt;= endpos) || (return Char(0), 0, 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-52"></a>52</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    j = startpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-53"></a>53</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    c, startpos = iterate(s,startpos)::Tuple{Char, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-54"></a>54</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    c, startpos, j
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-55"></a>55</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-56"></a>56</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-57"></a>57</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parseint_preamble-57"></a>
+              1 (0.0044%) samples spent in parseint_preamble<br />
+              0 (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              tryparse_internal
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#Lparse-jl-badd4c73f1b8efb12b8f-line.html-93">line 93</a><br />
+            </div>
+            <span class="code">function parseint_preamble(signed::Bool, base::Int, s::AbstractString, startpos::Int, endpos::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-58"></a>58</td>
+          <td></td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <div class="callees">
+              1 (100.00%)
+              samples spent calling
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parseint_iterate-50">parseint_iterate</a><br />
+            </div>
+            <span class="code">    c, i, j = parseint_iterate(s, startpos, endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-59"></a>59</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-60"></a>60</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while isspace(c)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-61"></a>61</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        c, i, j = parseint_iterate(s,i,endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-62"></a>62</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-63"></a>63</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    (j == 0) &amp;&amp; (return 0, 0, 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-64"></a>64</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-65"></a>65</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    sgn = 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-66"></a>66</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if signed
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-67"></a>67</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if c == &#39;-&#39; || c == &#39;+&#39;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-68"></a>68</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            (c == &#39;-&#39;) &amp;&amp; (sgn = -1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-69"></a>69</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            c, i, j = parseint_iterate(s,i,endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-70"></a>70</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-71"></a>71</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-72"></a>72</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-73"></a>73</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while isspace(c)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-74"></a>74</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        c, i, j = parseint_iterate(s,i,endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-75"></a>75</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-76"></a>76</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    (j == 0) &amp;&amp; (return 0, 0, 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-77"></a>77</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-78"></a>78</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if base == 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-79"></a>79</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if c == &#39;0&#39; &amp;&amp; i &lt;= endpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-80"></a>80</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            c, i = iterate(s,i)::Tuple{Char, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-81"></a>81</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            base = c==&#39;b&#39; ? 2 : c==&#39;o&#39; ? 8 : c==&#39;x&#39; ? 16 : 10
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-82"></a>82</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            if base != 10
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-83"></a>83</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                c, i, j = parseint_iterate(s,i,endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-84"></a>84</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-85"></a>85</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-86"></a>86</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            base = 10
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-87"></a>87</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-88"></a>88</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-89"></a>89</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return sgn, base, j
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-90"></a>90</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-91"></a>91</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-92"></a>92</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-tryparse_internal-92"></a>
+              1 (0.0044%) samples spent in tryparse_internal<br />
+              0 (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              #parse#350
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#Lparse-jl-badd4c73f1b8efb12b8f-line.html-240">line 240</a><br />
+            </div>
+            <span class="code">function tryparse_internal(::Type{T}, s::AbstractString, startpos::Int, endpos::Int, base_::Integer, raise::Bool) where T&lt;:Integer
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-93"></a>93</td>
+          <td></td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <div class="callees">
+              1 (100.00%)
+              samples spent calling
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parseint_preamble-57">parseint_preamble</a><br />
+            </div>
+            <span class="code">    sgn, base, i = parseint_preamble(T&lt;:Signed, Int(base_), s, startpos, endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-94"></a>94</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if sgn == 0 &amp;&amp; base == 0 &amp;&amp; i == 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-95"></a>95</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;input string is empty or only contains whitespace&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-96"></a>96</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-97"></a>97</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-98"></a>98</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if !(2 &lt;= base &lt;= 62)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-99"></a>99</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;invalid base: base must be 2 ≤ base ≤ 62, got $base&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-100"></a>100</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-101"></a>101</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-102"></a>102</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i == 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-103"></a>103</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;premature end of integer: $(repr(SubString(s,startpos,endpos)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-104"></a>104</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-105"></a>105</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-106"></a>106</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    c, i = parseint_iterate(s,i,endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-107"></a>107</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i == 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-108"></a>108</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;premature end of integer: $(repr(SubString(s,startpos,endpos)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-109"></a>109</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-110"></a>110</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-111"></a>111</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-112"></a>112</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    base = convert(T, base)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-113"></a>113</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Special case the common cases of base being 10 or 16 to avoid expensive runtime div
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-114"></a>114</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    m::T = base == 10 ? div(typemax(T) - T(9), T(10)) :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-115"></a>115</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">           base == 16 ? div(typemax(T) - T(15), T(16)) :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-116"></a>116</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                        div(typemax(T) - base + 1, base)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-117"></a>117</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n::T = 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-118"></a>118</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    a::Int = base &lt;= 36 ? 10 : 36
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-119"></a>119</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _0 = UInt32(&#39;0&#39;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-120"></a>120</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _9 = UInt32(&#39;9&#39;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-121"></a>121</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _A = UInt32(&#39;A&#39;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-122"></a>122</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _a = UInt32(&#39;a&#39;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-123"></a>123</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _Z = UInt32(&#39;Z&#39;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-124"></a>124</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _z = UInt32(&#39;z&#39;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-125"></a>125</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while n &lt;= m
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-126"></a>126</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        # Fast path from `UInt32(::Char)`; non-ascii will be &gt;= 0x80
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-127"></a>127</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        _c = reinterpret(UInt32, c) &gt;&gt; 24
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-128"></a>128</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        d::T = _0 &lt;= _c &lt;= _9 ? _c-_0             :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-129"></a>129</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">               _A &lt;= _c &lt;= _Z ? _c-_A+ UInt32(10) :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-130"></a>130</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">               _a &lt;= _c &lt;= _z ? _c-_a+a           : base
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-131"></a>131</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if d &gt;= base
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-132"></a>132</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            raise &amp;&amp; throw(ArgumentError(&quot;invalid base $base digit $(repr(c)) in $(repr(SubString(s,startpos,endpos)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-133"></a>133</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-134"></a>134</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-135"></a>135</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        n *= base
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-136"></a>136</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        n += d
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-137"></a>137</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if i &gt; endpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-138"></a>138</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            n *= sgn
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-139"></a>139</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-140"></a>140</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-141"></a>141</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        c, i = iterate(s,i)::Tuple{Char, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-142"></a>142</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        isspace(c) &amp;&amp; break
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-143"></a>143</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-144"></a>144</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    (T &lt;: Signed) &amp;&amp; (n *= sgn)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-145"></a>145</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while !isspace(c)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-146"></a>146</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        # Fast path from `UInt32(::Char)`; non-ascii will be &gt;= 0x80
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-147"></a>147</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        _c = reinterpret(UInt32, c) &gt;&gt; 24
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-148"></a>148</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        d::T = _0 &lt;= _c &lt;= _9 ? _c-_0             :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-149"></a>149</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">               _A &lt;= _c &lt;= _Z ? _c-_A+ UInt32(10) :
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-150"></a>150</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">               _a &lt;= _c &lt;= _z ? _c-_a+a           : base
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-151"></a>151</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if d &gt;= base
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-152"></a>152</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            raise &amp;&amp; throw(ArgumentError(&quot;invalid base $base digit $(repr(c)) in $(repr(SubString(s,startpos,endpos)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-153"></a>153</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-154"></a>154</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-155"></a>155</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (T &lt;: Signed) &amp;&amp; (d *= sgn)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-156"></a>156</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-157"></a>157</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        n, ov_mul = mul_with_overflow(n, base)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-158"></a>158</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        n, ov_add = add_with_overflow(n, d)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-159"></a>159</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if ov_mul | ov_add
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-160"></a>160</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            raise &amp;&amp; throw(OverflowError(&quot;overflow parsing $(repr(SubString(s,startpos,endpos)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-161"></a>161</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-162"></a>162</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-163"></a>163</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (i &gt; endpos) &amp;&amp; return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-164"></a>164</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        c, i = iterate(s,i)::Tuple{Char, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-165"></a>165</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-166"></a>166</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while i &lt;= endpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-167"></a>167</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        c, i = iterate(s,i)::Tuple{Char, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-168"></a>168</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if !isspace(c)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-169"></a>169</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            raise &amp;&amp; throw(ArgumentError(&quot;extra characters after whitespace in $(repr(SubString(s,startpos,endpos)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-170"></a>170</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-171"></a>171</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-172"></a>172</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-173"></a>173</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-174"></a>174</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-175"></a>175</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-176"></a>176</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{Bool}, sbuff::Union{String,SubString{String}},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-177"></a>177</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        startpos::Int, endpos::Int, base::Integer, raise::Bool)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-178"></a>178</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if isempty(sbuff)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-179"></a>179</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;input string is empty&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-180"></a>180</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-181"></a>181</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-182"></a>182</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-183"></a>183</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if isnumeric(sbuff[1])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-184"></a>184</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        intres = tryparse_internal(UInt8, sbuff, startpos, endpos, base, false)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-185"></a>185</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (intres == 1) &amp;&amp; return true
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-186"></a>186</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (intres == 0) &amp;&amp; return false
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-187"></a>187</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;invalid Bool representation: $(repr(sbuff))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-188"></a>188</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-189"></a>189</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-190"></a>190</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    orig_start = startpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-191"></a>191</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    orig_end   = endpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-192"></a>192</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-193"></a>193</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Ignore leading and trailing whitespace
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-194"></a>194</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while isspace(sbuff[startpos]) &amp;&amp; startpos &lt;= endpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-195"></a>195</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        startpos = nextind(sbuff, startpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-196"></a>196</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-197"></a>197</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while isspace(sbuff[endpos]) &amp;&amp; endpos &gt;= startpos
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-198"></a>198</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        endpos = prevind(sbuff, endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-199"></a>199</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-200"></a>200</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-201"></a>201</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    len = endpos - startpos + 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-202"></a>202</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    p   = pointer(sbuff) + startpos - 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-203"></a>203</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    GC.@preserve sbuff begin
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-204"></a>204</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (len == 4) &amp;&amp; (0 == ccall(:memcmp, Int32, (Ptr{UInt8}, Ptr{UInt8}, UInt),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-205"></a>205</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                  p, &quot;true&quot;, 4)) &amp;&amp; (return true)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-206"></a>206</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (len == 5) &amp;&amp; (0 == ccall(:memcmp, Int32, (Ptr{UInt8}, Ptr{UInt8}, UInt),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-207"></a>207</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                  p, &quot;false&quot;, 5)) &amp;&amp; (return false)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-208"></a>208</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-209"></a>209</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-210"></a>210</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if raise
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-211"></a>211</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        substr = SubString(sbuff, orig_start, orig_end) # show input string in the error to avoid confusion
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-212"></a>212</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if all(isspace, substr)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-213"></a>213</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            throw(ArgumentError(&quot;input string only contains whitespace&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-214"></a>214</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-215"></a>215</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            throw(ArgumentError(&quot;invalid Bool representation: $(repr(substr))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-216"></a>216</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-217"></a>217</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-218"></a>218</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-219"></a>219</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-220"></a>220</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-221"></a>221</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@inline function check_valid_base(base)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-222"></a>222</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if 2 &lt;= base &lt;= 62
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-223"></a>223</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return base
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-224"></a>224</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-225"></a>225</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid base: base must be 2 ≤ base ≤ 62, got $base&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-226"></a>226</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-227"></a>227</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-228"></a>228</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-229"></a>229</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    tryparse(type, str; base)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-230"></a>230</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-231"></a>231</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Like [`parse`](@ref), but returns either a value of the requested type,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-232"></a>232</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">or [`nothing`](@ref) if the string does not contain a valid number.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-233"></a>233</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-234"></a>234</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse(::Type{T}, s::AbstractString; base::Union{Nothing,Integer} = nothing) where {T&lt;:Integer}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-235"></a>235</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Zero base means, &quot;figure it out&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-236"></a>236</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    tryparse_internal(T, s, firstindex(s), lastindex(s), base===nothing ? 0 : check_valid_base(base), false)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-237"></a>237</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-238"></a>238</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-239"></a>239</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parse-350-239"></a>
+              2 (0.0087%) samples spent in #parse#350<br />
+              1 (100.00%) (ex.),
+              1 (50.00%) (incl.)
+              when called from
+              parse
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#Lparse-jl-badd4c73f1b8efb12b8f-line.html-240">line 240</a><br />
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parse-239"></a>
+              2 (0.0087%) samples spent in parse<br />
+              0 (ex.),
+              2 (100.00%) (incl.)
+              when called from
+              include
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#Lboot-jl-fedc2b778ea8a446fb45-line.html-328">line 328</a><br />
+            </div>
+            <span class="code">function parse(::Type{T}, s::AbstractString; base::Union{Nothing,Integer} = nothing) where {T&lt;:Integer}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-240"></a>240</td>
+          <td>1 (0.0044%)</td>
+          <td>4 (0.02%)</td>
+          <td>
+            <div class="callees">
+              1 (25.00%)
+              samples spent calling
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-tryparse_internal-92">tryparse_internal</a><br />
+              2 (50.00%)
+              samples spent calling
+              <a href="parse-jl-badd4c73f1b8efb12b8f-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parse-350-239">#parse#350</a><br />
+            </div>
+            <span class="code">    convert(T, tryparse_internal(T, s, firstindex(s), lastindex(s),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-241"></a>241</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                 base===nothing ? 0 : check_valid_base(base), true))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-242"></a>242</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-243"></a>243</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-244"></a>244</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## string to float functions ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-245"></a>245</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-246"></a>246</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse(::Type{Float64}, s::String)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-247"></a>247</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtod, Tuple{Bool, Float64},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-248"></a>248</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s, 0, sizeof(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-249"></a>249</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-250"></a>250</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-251"></a>251</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse(::Type{Float64}, s::SubString{String})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-252"></a>252</td>
+          <td>3 (0.01%)</td>
+          <td>3 (0.01%)</td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtod, Tuple{Bool, Float64},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-253"></a>253</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s.string, s.offset, s.ncodeunits)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-254"></a>254</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-255"></a>255</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-256"></a>256</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{Float64}, s::String, startpos::Int, endpos::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-257"></a>257</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtod, Tuple{Bool, Float64},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-258"></a>258</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s, startpos-1, endpos-startpos+1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-259"></a>259</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-260"></a>260</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-261"></a>261</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{Float64}, s::SubString{String}, startpos::Int, endpos::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-262"></a>262</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtod, Tuple{Bool, Float64},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-263"></a>263</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s.string, s.offset+startpos-1, endpos-startpos+1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-264"></a>264</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-265"></a>265</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-266"></a>266</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse(::Type{Float32}, s::String)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-267"></a>267</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtof, Tuple{Bool, Float32},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-268"></a>268</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s, 0, sizeof(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-269"></a>269</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-270"></a>270</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-271"></a>271</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse(::Type{Float32}, s::SubString{String})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-272"></a>272</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtof, Tuple{Bool, Float32},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-273"></a>273</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s.string, s.offset, s.ncodeunits)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-274"></a>274</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-275"></a>275</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-276"></a>276</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{Float32}, s::String, startpos::Int, endpos::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-277"></a>277</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtof, Tuple{Bool, Float32},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-278"></a>278</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s, startpos-1, endpos-startpos+1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-279"></a>279</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-280"></a>280</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-281"></a>281</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{Float32}, s::SubString{String}, startpos::Int, endpos::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-282"></a>282</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue, val = ccall(:jl_try_substrtof, Tuple{Bool, Float32},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-283"></a>283</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                          (Ptr{UInt8},Csize_t,Csize_t), s.string, s.offset+startpos-1, endpos-startpos+1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-284"></a>284</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    hasvalue ? val : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-285"></a>285</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-286"></a>286</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse(::Type{T}, s::AbstractString) where {T&lt;:Union{Float32,Float64}} = tryparse(T, String(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-287"></a>287</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse(::Type{Float16}, s::AbstractString) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-288"></a>288</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    convert(Union{Float16, Nothing}, tryparse(Float32, s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-289"></a>289</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse_internal(::Type{Float16}, s::AbstractString, startpos::Int, endpos::Int) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-290"></a>290</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    convert(Union{Float16, Nothing}, tryparse_internal(Float32, s, startpos, endpos))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-291"></a>291</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-292"></a>292</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## string to complex functions ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-293"></a>293</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-294"></a>294</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{Complex{T}}, s::Union{String,SubString{String}}, i::Int, e::Int, raise::Bool) where {T&lt;:Real}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-295"></a>295</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # skip initial whitespace
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-296"></a>296</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while i ≤ e &amp;&amp; isspace(s[i])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-297"></a>297</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        i = nextind(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-298"></a>298</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-299"></a>299</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i &gt; e
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-300"></a>300</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;input string is empty or only contains whitespace&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-301"></a>301</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-302"></a>302</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-303"></a>303</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-304"></a>304</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # find index of ± separating real/imaginary parts (if any)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-305"></a>305</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    i₊ = something(findnext(in((&#39;+&#39;,&#39;-&#39;)), s, i), 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-306"></a>306</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i₊ == i # leading ± sign
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-307"></a>307</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        i₊ = something(findnext(in((&#39;+&#39;,&#39;-&#39;)), s, i₊+1), 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-308"></a>308</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-309"></a>309</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i₊ != 0 &amp;&amp; s[i₊-1] in (&#39;e&#39;,&#39;E&#39;) # exponent sign
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-310"></a>310</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        i₊ = something(findnext(in((&#39;+&#39;,&#39;-&#39;)), s, i₊+1), 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-311"></a>311</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-312"></a>312</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-313"></a>313</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # find trailing im/i/j
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-314"></a>314</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    iᵢ = something(findprev(in((&#39;m&#39;,&#39;i&#39;,&#39;j&#39;)), s, e), 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-315"></a>315</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if iᵢ &gt; 0 &amp;&amp; s[iᵢ] == &#39;m&#39; # im
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-316"></a>316</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        iᵢ -= 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-317"></a>317</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if s[iᵢ] != &#39;i&#39;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-318"></a>318</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            raise &amp;&amp; throw(ArgumentError(&quot;expected trailing \&quot;im\&quot;, found only \&quot;m\&quot;&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-319"></a>319</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-320"></a>320</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-321"></a>321</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-322"></a>322</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-323"></a>323</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i₊ == 0 # purely real or imaginary value
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-324"></a>324</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if iᵢ &gt; i &amp;&amp; !(iᵢ == i+1 &amp;&amp; s[i] in (&#39;+&#39;,&#39;-&#39;)) # purely imaginary (not &quot;±inf&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-325"></a>325</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            x = tryparse_internal(T, s, i, iᵢ-1, raise)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-326"></a>326</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            x === nothing &amp;&amp; return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-327"></a>327</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return Complex{T}(zero(x),x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-328"></a>328</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        else # purely real
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-329"></a>329</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            x = tryparse_internal(T, s, i, e, raise)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-330"></a>330</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            x === nothing &amp;&amp; return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-331"></a>331</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return Complex{T}(x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-332"></a>332</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-333"></a>333</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-334"></a>334</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-335"></a>335</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if iᵢ &lt; i₊
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-336"></a>336</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        raise &amp;&amp; throw(ArgumentError(&quot;missing imaginary unit&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-337"></a>337</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return nothing # no imaginary part
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-338"></a>338</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-339"></a>339</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-340"></a>340</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # parse real part
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-341"></a>341</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    re = tryparse_internal(T, s, i, i₊-1, raise)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-342"></a>342</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    re === nothing &amp;&amp; return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-343"></a>343</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-344"></a>344</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # parse imaginary part
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-345"></a>345</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    im = tryparse_internal(T, s, i₊+1, iᵢ-1, raise)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-346"></a>346</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    im === nothing &amp;&amp; return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-347"></a>347</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-348"></a>348</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return Complex{T}(re, s[i₊]==&#39;-&#39; ? -im : im)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-349"></a>349</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-350"></a>350</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-351"></a>351</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># the ±1 indexing above for ascii chars is specific to String, so convert:
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-352"></a>352</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse_internal(T::Type{Complex{S}}, s::AbstractString, i::Int, e::Int, raise::Bool) where S&lt;:Real =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-353"></a>353</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    tryparse_internal(T, String(s), i, e, raise)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-354"></a>354</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-355"></a>355</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># fallback methods for tryparse_internal
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-356"></a>356</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse_internal(::Type{T}, s::AbstractString, startpos::Int, endpos::Int) where T&lt;:Real =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-357"></a>357</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    startpos == firstindex(s) &amp;&amp; endpos == lastindex(s) ? tryparse(T, s) : tryparse(T, SubString(s, startpos, endpos))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-358"></a>358</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{T}, s::AbstractString, startpos::Int, endpos::Int, raise::Bool) where T&lt;:Real
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-359"></a>359</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    result = tryparse_internal(T, s, startpos, endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-360"></a>360</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if raise &amp;&amp; result === nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-361"></a>361</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        _parse_failure(T, s, startpos, endpos)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-362"></a>362</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-363"></a>363</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return result
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-364"></a>364</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-365"></a>365</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function tryparse_internal(::Type{T}, s::AbstractString, raise::Bool; kwargs...) where T&lt;:Real
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-366"></a>366</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    result = tryparse(T, s; kwargs...)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-367"></a>367</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if raise &amp;&amp; result === nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-368"></a>368</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        _parse_failure(T, s)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-369"></a>369</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-370"></a>370</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return result
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-371"></a>371</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-372"></a>372</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@noinline _parse_failure(T, s::AbstractString, startpos = firstindex(s), endpos = lastindex(s)) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-373"></a>373</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;cannot parse $(repr(s[startpos:endpos])) as $T&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-374"></a>374</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-375"></a>375</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse_internal(::Type{T}, s::AbstractString, startpos::Int, endpos::Int, raise::Bool) where T&lt;:Integer =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-376"></a>376</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    tryparse_internal(T, s, startpos, endpos, 10, raise)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-377"></a>377</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-parse-jl-parse-377"></a>
+              3 (0.01%) samples spent in parse<br />
+              3 (100.00%) (ex.),
+              3 (100.00%) (incl.)
+              when called from
+              include
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#Lboot-jl-fedc2b778ea8a446fb45-line.html-328">line 328</a><br />
+            </div>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-378"></a>378</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">parse(::Type{T}, s::AbstractString; kwargs...) where T&lt;:Real =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-379"></a>379</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    convert(T, tryparse_internal(T, s, true; kwargs...))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-380"></a>380</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">parse(::Type{T}, s::AbstractString) where T&lt;:Complex =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-381"></a>381</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    convert(T, tryparse_internal(T, s, firstindex(s), lastindex(s), true))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-382"></a>382</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-383"></a>383</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">tryparse(T::Type{Complex{S}}, s::AbstractString) where S&lt;:Real =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lparse-jl-badd4c73f1b8efb12b8f-line.html-384"></a>384</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    tryparse_internal(T, s, firstindex(s), lastindex(s), false)
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

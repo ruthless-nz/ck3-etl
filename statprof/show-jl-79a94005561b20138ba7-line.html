@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\.julia\packages\DataFrames\GtZ1l\src\dataframerow\show.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.show(io::IO, dfr::DataFrameRow;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                   allcols::Bool = !get(io, :limit, false),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                   splitcols = get(io, :limit, false),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                   rowlabel::Symbol = :Row,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-dataframerow-show-jl-show-459-5"></a>
+              57 (0.25%) samples spent in #show#459<br />
+              0 (ex.),
+              57 (100.00%) (incl.)
+              when called from
+              show
+              <a href="show-jl-79a94005561b20138ba7-line.html#Lshow-jl-79a94005561b20138ba7-line.html-6">line 6</a><br />
+            </div>
+            <span class="code">                   eltypes::Bool = true)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-6"></a>6</td>
+          <td></td>
+          <td>57 (0.25%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-dataframerow-show-jl-show-6"></a>
+              57 (0.25%) samples spent in show<br />
+              0 (ex.),
+              54 (94.74%) (incl.)
+              when called from
+              print
+              <a href="io-jl-65ec08ef3fe93419fad3-line.html#Lio-jl-65ec08ef3fe93419fad3-line.html-37">line 37</a><br />
+            </div>
+            <div class="callees">
+              57 (100.00%)
+              samples spent calling
+              <a href="show-jl-79a94005561b20138ba7-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-dataframerow-show-jl-show-459-5">#show#459</a><br />
+            </div>
+            <span class="code">    r, c = parentindices(dfr)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    print(io, &quot;DataFrameRow&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-8"></a>8</td>
+          <td></td>
+          <td>57 (0.25%)</td>
+          <td>
+            <div class="callees">
+              57 (100.00%)
+              samples spent calling
+              <a href="nothing-0feca720e2c29dafb2c9-line.html#Snothing-_show">#_show</a><br />
+            </div>
+            <span class="code">    _show(io, view(parent(dfr), [r], c), allcols=allcols, splitcols=splitcols,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          rowlabel=rowlabel, summary=false, rowid=r, eltypes=eltypes)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.show(io::IO, mime::MIME&quot;text/plain&quot;, dfr::DataFrameRow;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          allcols::Bool = !get(io, :limit, false),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          splitcols = get(io, :limit, false),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          rowlabel::Symbol = :Row,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          eltypes::Bool = true) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    show(io, dfr, allcols=allcols, splitcols=splitcols,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">         rowlabel=rowlabel, eltypes=eltypes)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.show(dfr::DataFrameRow;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          allcols::Bool = !get(stdout, :limit, true),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          splitcols = get(stdout, :limit, true),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          rowlabel::Symbol = :Row,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">          eltypes::Bool = true) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    show(stdout, dfr, allcols=allcols, splitcols=splitcols,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lshow-jl-79a94005561b20138ba7-line.html-26"></a>26</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">         rowlabel=rowlabel, eltypes=eltypes)
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

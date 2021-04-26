@@ -1,0 +1,796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\OneDrive\Documents\julia\ck3_read\core.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">using FileWatching
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">using ZipFile
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">using Dates
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">using DataFrames
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># vars 
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">playthrough_name = &quot;Barcelona_1&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">ck3_save_location = &quot;C://Users//Tims PC//OneDrive//Documents//Paradox Interactive//Crusader Kings III//save games&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">file_to_slurp = &quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">data_location = &quot;data//&quot;*playthrough_name
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Run some startup processes
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Check to see if there is a folder our current playthrough
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">if isdir(data_location) == false
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    mkdir(data_location)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># ok so we want to  query the save file location for any changes to the files in there
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">timeout = 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">while (timeout == 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    global file_to_slurp
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if (@isdefined file_to_slurp) == false
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-26"></a>26</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        file_to_slurp = &quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-27"></a>27</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-28"></a>28</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-29"></a>29</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-30"></a>30</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># first up, check to see if the control file wants us to keep running
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-31"></a>31</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">f = open(&quot;control.txt&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-32"></a>32</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ctrl = readlines(f)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-33"></a>33</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">close(f)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-34"></a>34</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-35"></a>35</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># look at the folder for 2 secs
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-36"></a>36</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    x = watch_folder(ck3_save_location,1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-37"></a>37</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># println(Dates.format(now(), &quot;HH:MM:SS:ss&quot;),&quot;   &quot;,x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-38"></a>38</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># println(file_to_slurp)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-39"></a>39</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-40"></a>40</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># check to see if we have files we care about.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-41"></a>41</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if x[1] != &quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-42"></a>42</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if x[1][1:8] != &quot;autosave&quot; &amp;&amp; x[1][end-2:end] != &quot;tmp&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-43"></a>43</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            # set the next file to be slurped up
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-44"></a>44</td>
+          <td>1 (0.0044%)</td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-OneDrive-Documents-julia-ck3_read-core-jl-top-level-scope-44"></a>
+              1 (0.0044%) samples spent in top-level scope<br />
+              1 (100.00%) (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              include
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#Lboot-jl-fedc2b778ea8a446fb45-line.html-328">line 328</a><br />
+            </div>
+            <span class="code">            file_to_slurp = ck3_save_location*&quot;//&quot;*x[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-45"></a>45</td>
+          <td></td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-OneDrive-Documents-julia-ck3_read-core-jl-top-level-scope-45"></a>
+              1 (0.0044%) samples spent in top-level scope<br />
+              0 (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              include
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#Lboot-jl-fedc2b778ea8a446fb45-line.html-328">line 328</a><br />
+            </div>
+            <div class="callees">
+              1 (100.00%)
+              samples spent calling
+              <a href="coreio-jl-81599f2d98d05035a977-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-coreio-jl-println-3">println</a><br />
+            </div>
+            <span class="code">            println(&quot;ready_to_slurp: &quot;,file_to_slurp)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-46"></a>46</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-47"></a>47</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-48"></a>48</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-49"></a>49</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-50"></a>50</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # check if we have a file ready to slurp up
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-51"></a>51</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if x[1] == &quot;&quot; &amp;&amp; file_to_slurp != &quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-52"></a>52</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            println(&quot;Ingesting file:  &quot;,file_to_slurp)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-53"></a>53</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            # Now we do the thing!
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-54"></a>54</td>
+          <td></td>
+          <td>7206 (31.46%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-OneDrive-Documents-julia-ck3_read-core-jl-top-level-scope-54"></a>
+              7206 (31.46%) samples spent in top-level scope<br />
+              0 (ex.),
+              7206 (100.00%) (incl.)
+              when called from
+              include
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#Lboot-jl-fedc2b778ea8a446fb45-line.html-328">line 328</a><br />
+            </div>
+            <div class="callees">
+              7206 (100.00%)
+              samples spent calling
+              <a href="client-jl-1b275afefde8b418a549-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-client-jl-include-430">include</a><br />
+            </div>
+            <span class="code">            include(&quot;blocks//process_blocks.jl&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-55"></a>55</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            println(&quot;File has been Slurped!&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-56"></a>56</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            file_to_slurp =&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-57"></a>57</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end 
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-58"></a>58</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-59"></a>59</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># And once the loop is done, stop listening
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-60"></a>60</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if ctrl[1] == &quot;stop&quot; 
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-61"></a>61</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        global timeout = 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-62"></a>62</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        unwatch_folder(ck3_save_location)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-63"></a>63</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-64"></a>64</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-65"></a>65</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-66"></a>66</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># and print this boyo
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-67"></a>67</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-68"></a>68</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">println(provinces[1,:])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-69"></a>69</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">println(landed_titles[1,:])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-70"></a>70</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">println(Landed_title_claims[1,:])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-71"></a>71</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">println(Landed_title_history[1,:])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-72"></a>72</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">println(living_person[1,:])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lcore-jl-2940b0b2be1ac43f7bc9-line.html-73"></a>73</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

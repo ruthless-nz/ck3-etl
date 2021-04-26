@@ -1,0 +1,2351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\strings\substring.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># This file is a part of Julia. License is MIT: https://julialang.org/license
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubString(s::AbstractString, i::Integer, j::Integer=lastindex(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubString(s::AbstractString, r::UnitRange{&lt;:Integer})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Like [`getindex`](@ref), but returns a view into the parent string `s`
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">within range `i:j` or `r` respectively instead of making a copy.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Examples
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; SubString(&quot;abc&quot;, 1, 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;ab&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; SubString(&quot;abc&quot;, 1:2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;ab&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; SubString(&quot;abc&quot;, 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;bc&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">struct SubString{T&lt;:AbstractString} &lt;: AbstractString
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    string::T
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    offset::Int
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ncodeunits::Int
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-26"></a>26</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-27"></a>27</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    function SubString{T}(s::T, i::Int, j::Int) where T&lt;:AbstractString
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-28"></a>28</td>
+          <td>12 (0.05%)</td>
+          <td>12 (0.05%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-28"></a>
+              12 (0.05%) samples spent in Type<br />
+              12 (100.00%) (ex.),
+              12 (100.00%) (incl.)
+              when called from
+              Type
+              <a href="substring-jl-9433afd4759d33128c70-line.html#Lsubstring-jl-9433afd4759d33128c70-line.html-38">line 38</a><br />
+            </div>
+            <span class="code">        i ≤ j || return new(s, 0, 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-29"></a>29</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        @boundscheck begin
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-30"></a>30</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            checkbounds(s, i:j)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-31"></a>31</td>
+          <td>1 (0.0044%)</td>
+          <td>2 (0.0087%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-31"></a>
+              2 (0.0087%) samples spent in Type<br />
+              1 (100.00%) (ex.),
+              2 (100.00%) (incl.)
+              when called from
+              Type
+              <a href="substring-jl-9433afd4759d33128c70-line.html#Lsubstring-jl-9433afd4759d33128c70-line.html-38">line 38</a><br />
+            </div>
+            <div class="callees">
+              1 (50.00%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-isvalid-295">isvalid</a><br />
+            </div>
+            <span class="code">            @inbounds isvalid(s, i) || string_index_err(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-32"></a>32</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            @inbounds isvalid(s, j) || string_index_err(s, j)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-33"></a>33</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-34"></a>34</td>
+          <td>46 (0.20%)</td>
+          <td>49 (0.21%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-34"></a>
+              17 (0.07%) samples spent in Type<br />
+              14 (100.00%) (ex.),
+              17 (100.00%) (incl.)
+              when called from
+              Type
+              <a href="substring-jl-9433afd4759d33128c70-line.html#Lsubstring-jl-9433afd4759d33128c70-line.html-38">line 38</a><br />
+            </div>
+            <div class="callees">
+              3 (6.12%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-nextind-134">nextind</a><br />
+            </div>
+            <span class="code">        return new(s, i-1, nextind(s,j)-i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-35"></a>35</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-36"></a>36</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-37"></a>37</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-38"></a>38</td>
+          <td></td>
+          <td>38 (0.17%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-38"></a>
+              38 (0.17%) samples spent in Type<br />
+              0 (ex.),
+              1 (2.63%) (incl.)
+              when called from
+              _split
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-335">line 335</a><br />
+              0 (ex.),
+              3 (7.89%) (incl.)
+              when called from
+              rstrip
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-195">line 195</a><br />
+              0 (ex.),
+              3 (7.89%) (incl.)
+              when called from
+              Type
+              <a href="substring-jl-9433afd4759d33128c70-line.html#Lsubstring-jl-9433afd4759d33128c70-line.html-44">line 44</a><br />
+              0 (ex.),
+              12 (31.58%) (incl.)
+              when called from
+              rstrip
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-193">line 193</a><br />
+              0 (ex.),
+              19 (50.00%) (incl.)
+              when called from
+              Type
+              <a href="substring-jl-9433afd4759d33128c70-line.html#Lsubstring-jl-9433afd4759d33128c70-line.html-39">line 39</a><br />
+            </div>
+            <div class="callees">
+              7 (18.42%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-Type-134">Type</a><br />
+              2 (5.26%)
+              samples spent calling
+              <a href="substring-jl-9433afd4759d33128c70-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-31">Type</a><br />
+              12 (31.58%)
+              samples spent calling
+              <a href="substring-jl-9433afd4759d33128c70-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-28">Type</a><br />
+              17 (44.74%)
+              samples spent calling
+              <a href="substring-jl-9433afd4759d33128c70-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-34">Type</a><br />
+            </div>
+            <span class="code">@propagate_inbounds SubString(s::T, i::Int, j::Int) where {T&lt;:AbstractString} = SubString{T}(s, i, j)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-39"></a>39</td>
+          <td></td>
+          <td>23 (0.10%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-39"></a>
+              23 (0.10%) samples spent in Type<br />
+              0 (ex.),
+              2 (8.70%) (incl.)
+              when called from
+              _split
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-346">line 346</a><br />
+              0 (ex.),
+              10 (43.48%) (incl.)
+              when called from
+              findnext
+              <a href="search-jl-067609a010a899f5fbef-line.html#Lsearch-jl-067609a010a899f5fbef-line.html-112">line 112</a><br />
+              0 (ex.),
+              11 (47.83%) (incl.)
+              when called from
+              #replace#340
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-458">line 458</a><br />
+            </div>
+            <div class="callees">
+              4 (17.39%)
+              samples spent calling
+              <a href="basic-jl-3c2f6d5e8908891d072b-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-basic-jl-lastindex-158">lastindex</a><br />
+              19 (82.61%)
+              samples spent calling
+              <a href="substring-jl-9433afd4759d33128c70-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-38">Type</a><br />
+            </div>
+            <span class="code">@propagate_inbounds SubString(s::AbstractString, i::Integer, j::Integer=lastindex(s)) = SubString(s, Int(i), Int(j))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-40"></a>40</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@propagate_inbounds SubString(s::AbstractString, r::UnitRange{&lt;:Integer}) = SubString(s, first(r), last(r))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-41"></a>41</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-42"></a>42</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@propagate_inbounds function SubString(s::SubString, i::Int, j::Int)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-43"></a>43</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @boundscheck i ≤ j &amp;&amp; checkbounds(s, i:j)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-44"></a>44</td>
+          <td></td>
+          <td>3 (0.01%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-44"></a>
+              3 (0.01%) samples spent in Type<br />
+              0 (ex.),
+              1 (33.33%) (incl.)
+              when called from
+              lstrip
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-162">line 162</a><br />
+              0 (ex.),
+              2 (66.67%) (incl.)
+              when called from
+              lstrip
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-164">line 164</a><br />
+            </div>
+            <div class="callees">
+              3 (100.00%)
+              samples spent calling
+              <a href="substring-jl-9433afd4759d33128c70-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-38">Type</a><br />
+            </div>
+            <span class="code">    SubString(s.string, s.offset+i, s.offset+j)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-45"></a>45</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-46"></a>46</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-47"></a>47</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">SubString(s::AbstractString) = SubString(s, 1, lastindex(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-48"></a>48</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">SubString{T}(s::T) where {T&lt;:AbstractString} = SubString{T}(s, 1, lastindex(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-49"></a>49</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-50"></a>50</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">convert(::Type{SubString{S}}, s::AbstractString) where {S&lt;:AbstractString} =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-51"></a>51</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubString(convert(S, s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-52"></a>52</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">convert(::Type{T}, s::T) where {T&lt;:SubString} = s
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-53"></a>53</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-54"></a>54</td>
+          <td></td>
+          <td>10 (0.04%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-Type-54"></a>
+              10 (0.04%) samples spent in Type<br />
+              0 (ex.),
+              10 (100.00%) (incl.)
+              when called from
+              convert
+              <a href="basic-jl-3c2f6d5e8908891d072b-line.html#Lbasic-jl-3c2f6d5e8908891d072b-line.html-209">line 209</a><br />
+            </div>
+            <div class="callees">
+              10 (100.00%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-unsafe_string-53">unsafe_string</a><br />
+            </div>
+            <span class="code">String(s::SubString{String}) = unsafe_string(pointer(s.string, s.offset+1), s.ncodeunits)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-55"></a>55</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-56"></a>56</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">ncodeunits(s::SubString) = s.ncodeunits
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-57"></a>57</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">codeunit(s::SubString) = codeunit(s.string)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-58"></a>58</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">length(s::SubString) = length(s.string, s.offset+1, s.offset+s.ncodeunits)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-59"></a>59</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-60"></a>60</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function codeunit(s::SubString, i::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-61"></a>61</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @boundscheck checkbounds(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-62"></a>62</td>
+          <td></td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-codeunit-62"></a>
+              1 (0.0044%) samples spent in codeunit<br />
+              0 (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              _nextind_str
+              <a href="string-jl-33e19517945c5b865681-line.html#Lstring-jl-33e19517945c5b865681-line.html-141">line 141</a><br />
+            </div>
+            <div class="callees">
+              1 (100.00%)
+              samples spent calling
+              <a href="Base-jl-4b16c93e1dccf95c6618-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-Base-jl-getproperty-20">getproperty</a><br />
+            </div>
+            <span class="code">    @inbounds return codeunit(s.string, s.offset + i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-63"></a>63</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-64"></a>64</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-65"></a>65</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function iterate(s::SubString, i::Integer=firstindex(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-66"></a>66</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    i == ncodeunits(s)+1 &amp;&amp; return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-67"></a>67</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @boundscheck checkbounds(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-68"></a>68</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    y = iterate(s.string, s.offset + i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-69"></a>69</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    y === nothing &amp;&amp; return nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-70"></a>70</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    c, i = y
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-71"></a>71</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return c, i - s.offset
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-72"></a>72</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-73"></a>73</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-74"></a>74</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function getindex(s::SubString, i::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-75"></a>75</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @boundscheck checkbounds(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-76"></a>76</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @inbounds return getindex(s.string, s.offset + i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-77"></a>77</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-78"></a>78</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-79"></a>79</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function isvalid(s::SubString, i::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-80"></a>80</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ib = true
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-81"></a>81</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @boundscheck ib = checkbounds(Bool, s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-82"></a>82</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @inbounds return ib &amp;&amp; isvalid(s.string, s.offset + i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-83"></a>83</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-84"></a>84</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-85"></a>85</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">byte_string_classify(s::SubString{String}) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-86"></a>86</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ccall(:u8_isvalid, Int32, (Ptr{UInt8}, Int), s, sizeof(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-87"></a>87</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-88"></a>88</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">isvalid(::Type{String}, s::SubString{String}) = byte_string_classify(s) ≠ 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-89"></a>89</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">isvalid(s::SubString{String}) = isvalid(String, s)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-90"></a>90</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-thisind-90"></a>
+              1 (0.0044%) samples spent in thisind<br />
+              0 (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              lastindex
+              <a href="basic-jl-3c2f6d5e8908891d072b-line.html#Lbasic-jl-3c2f6d5e8908891d072b-line.html-159">line 159</a><br />
+            </div>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-91"></a>91</td>
+          <td></td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-nextind-91"></a>
+              3 (0.01%) samples spent in nextind<br />
+              0 (ex.),
+              3 (100.00%) (incl.)
+              when called from
+              iterate
+              <a href="basic-jl-3c2f6d5e8908891d072b-line.html#Lbasic-jl-3c2f6d5e8908891d072b-line.html-539">line 539</a><br />
+            </div>
+            <div class="callees">
+              1 (100.00%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-_thisind_str-120">_thisind_str</a><br />
+            </div>
+            <span class="code">thisind(s::SubString{String}, i::Int) = _thisind_str(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-92"></a>92</td>
+          <td></td>
+          <td>11 (0.05%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-nextind-92"></a>
+              8 (0.03%) samples spent in nextind<br />
+              0 (ex.),
+              8 (100.00%) (incl.)
+              when called from
+              iterate
+              <a href="basic-jl-3c2f6d5e8908891d072b-line.html#Lbasic-jl-3c2f6d5e8908891d072b-line.html-539">line 539</a><br />
+            </div>
+            <div class="callees">
+              8 (72.73%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-_nextind_str-137">_nextind_str</a><br />
+              3 (27.27%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-_nextind_str-137">_nextind_str</a><br />
+            </div>
+            <span class="code">nextind(s::SubString{String}, i::Int) = _nextind_str(s, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-93"></a>93</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-94"></a>94</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function cmp(a::SubString{String}, b::SubString{String})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-95"></a>95</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    na = sizeof(a)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-96"></a>96</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    nb = sizeof(b)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-97"></a>97</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    c = ccall(:memcmp, Int32, (Ptr{UInt8}, Ptr{UInt8}, UInt),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-98"></a>98</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">              pointer(a), pointer(b), min(na, nb))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-99"></a>99</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return c &lt; 0 ? -1 : c &gt; 0 ? +1 : cmp(na, nb)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-100"></a>100</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-101"></a>101</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-102"></a>102</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># don&#39;t make unnecessary copies when passing substrings to C functions
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-103"></a>103</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">cconvert(::Type{Ptr{UInt8}}, s::SubString{String}) = s
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-104"></a>104</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">cconvert(::Type{Ptr{Int8}}, s::SubString{String}) = s
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-105"></a>105</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-106"></a>106</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function unsafe_convert(::Type{Ptr{R}}, s::SubString{String}) where R&lt;:Union{Int8, UInt8}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-107"></a>107</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    convert(Ptr{R}, pointer(s.string)) + s.offset
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-108"></a>108</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-findnext-108"></a>
+              24 (0.10%) samples spent in findnext<br />
+              1 (4.17%) (ex.),
+              1 (4.17%) (incl.)
+              when called from
+              _searchindex
+              <a href="search-jl-067609a010a899f5fbef-line.html#Lsearch-jl-067609a010a899f5fbef-line.html-131">line 131</a><br />
+              7 (29.17%) (ex.),
+              7 (29.17%) (incl.)
+              when called from
+              #replace#340
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-438">line 438</a><br />
+              16 (66.67%) (ex.),
+              16 (66.67%) (incl.)
+              when called from
+              #replace#340
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-453">line 453</a><br />
+            </div>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-109"></a>109</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-110"></a>110</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">pointer(x::SubString{String}) = pointer(x.string) + x.offset
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-111"></a>111</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">pointer(x::SubString{String}, i::Integer) = pointer(x.string) + x.offset + (i-1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-112"></a>112</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-113"></a>113</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-114"></a>114</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    reverse(s::AbstractString) -&gt; AbstractString
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-115"></a>115</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-116"></a>116</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Reverses a string. Technically, this function reverses the codepoints in a string and its
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-117"></a>117</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">main utility is for reversed-order string processing, especially for reversed
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-118"></a>118</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">regular-expression searches. See also [`reverseind`](@ref) to convert indices in `s` to
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-119"></a>119</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">indices in `reverse(s)` and vice-versa, and `graphemes` from module `Unicode` to
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-120"></a>120</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">operate on user-visible &quot;characters&quot; (graphemes) rather than codepoints.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-121"></a>121</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">See also [`Iterators.reverse`](@ref) for
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-122"></a>122</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">reverse-order iteration without making a copy. Custom string types must implement the
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-123"></a>123</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`reverse` function themselves and should typically return a string with the same type
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-124"></a>124</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">and encoding. If they return a string with a different encoding, they must also override
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-125"></a>125</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`reverseind` for that string type to satisfy `s[reverseind(s,i)] == reverse(s)[i]`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-126"></a>126</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-127"></a>127</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Examples
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-128"></a>128</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-129"></a>129</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; reverse(&quot;JuliaLang&quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-130"></a>130</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;gnaLailuJ&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-131"></a>131</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-132"></a>132</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; reverse(&quot;ax̂e&quot;) # combining characters can lead to surprising results
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-133"></a>133</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;êxa&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-134"></a>134</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-135"></a>135</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; using Unicode
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-136"></a>136</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-137"></a>137</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; join(reverse(collect(graphemes(&quot;ax̂e&quot;)))) # reverses graphemes
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-138"></a>138</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;ex̂a&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-139"></a>139</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-140"></a>140</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-141"></a>141</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function reverse(s::Union{String,SubString{String}})::String
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-142"></a>142</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Read characters forwards from `s` and write backwards to `out`
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-143"></a>143</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    out = _string_n(sizeof(s))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-144"></a>144</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    offs = sizeof(s) + 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-145"></a>145</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for c in s
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-146"></a>146</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        offs -= ncodeunits(c)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-147"></a>147</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        __unsafe_string!(out, c, offs)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-148"></a>148</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-149"></a>149</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return out
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-150"></a>150</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-151"></a>151</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-152"></a>152</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">string(a::String)            = String(a)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-153"></a>153</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">string(a::SubString{String}) = String(a)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-154"></a>154</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-155"></a>155</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@inline function __unsafe_string!(out, c::Char, offs::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-156"></a>156</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    x = bswap(reinterpret(UInt32, c))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-157"></a>157</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = ncodeunits(c)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-158"></a>158</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    unsafe_store!(pointer(out, offs), x % UInt8)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-159"></a>159</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-substring-jl-lstrip-159"></a>
+              3 (0.01%) samples spent in lstrip<br />
+              3 (100.00%) (ex.),
+              3 (100.00%) (incl.)
+              when called from
+              lstrip
+              <a href="util-jl-3b4659bb6f31db017935-line.html#Lutil-jl-3b4659bb6f31db017935-line.html-166">line 166</a><br />
+            </div>
+            <span class="code">    n == 1 &amp;&amp; return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-160"></a>160</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    x &gt;&gt;= 8
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-161"></a>161</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    unsafe_store!(pointer(out, offs+1), x % UInt8)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-162"></a>162</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n == 2 &amp;&amp; return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-163"></a>163</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    x &gt;&gt;= 8
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-164"></a>164</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    unsafe_store!(pointer(out, offs+2), x % UInt8)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-165"></a>165</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n == 3 &amp;&amp; return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-166"></a>166</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    x &gt;&gt;= 8
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-167"></a>167</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    unsafe_store!(pointer(out, offs+3), x % UInt8)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-168"></a>168</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-169"></a>169</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-170"></a>170</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-171"></a>171</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@inline function __unsafe_string!(out, s::Union{String, SubString{String}}, offs::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-172"></a>172</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = sizeof(s)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-173"></a>173</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    unsafe_copyto!(pointer(out, offs), pointer(s), n)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-174"></a>174</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-175"></a>175</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-176"></a>176</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-177"></a>177</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function string(a::Union{Char, String, SubString{String}}...)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-178"></a>178</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-179"></a>179</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for v in a
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-180"></a>180</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if v isa Char
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-181"></a>181</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            n += ncodeunits(v)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-182"></a>182</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-183"></a>183</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            n += sizeof(v)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-184"></a>184</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-185"></a>185</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-186"></a>186</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    out = _string_n(n)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-187"></a>187</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    offs = 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-188"></a>188</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for v in a
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-189"></a>189</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        offs += __unsafe_string!(out, v, offs)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-190"></a>190</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-191"></a>191</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return out
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-192"></a>192</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-193"></a>193</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-194"></a>194</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function repeat(s::Union{String, SubString{String}}, r::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-195"></a>195</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    r &lt; 0 &amp;&amp; throw(ArgumentError(&quot;can&#39;t repeat a string $r times&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-196"></a>196</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    r == 1 &amp;&amp; return String(s)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-197"></a>197</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = sizeof(s)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-198"></a>198</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    out = _string_n(n*r)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-199"></a>199</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if n == 1 # common case: repeating a single-byte string
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-200"></a>200</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        @inbounds b = codeunit(s, 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-201"></a>201</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        ccall(:memset, Ptr{Cvoid}, (Ptr{UInt8}, Cint, Csize_t), out, b, r)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-202"></a>202</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-203"></a>203</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        for i = 0:r-1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-204"></a>204</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            unsafe_copyto!(pointer(out, i*n+1), pointer(s), n)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-205"></a>205</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-206"></a>206</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-207"></a>207</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return out
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-208"></a>208</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-209"></a>209</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubstring-jl-9433afd4759d33128c70-line.html-210"></a>210</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">getindex(s::AbstractString, r::UnitRange{&lt;:Integer}) = SubString(s, r)
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\.julia\packages\ZipFile\DW0Qr\src\iojunk.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Writer the byte b in w.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function write(w::WritableFile, b::UInt8)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    write(w, Ref(b))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Read and return a byte from f. Throws EOFError if there is no more byte to read.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function read(f::ReadableFile, ::Type{UInt8})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # This function needs to be fast because readbytes, readstring, etc.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # uses it. Avoid function calls when possible.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-10"></a>10</td>
+          <td></td>
+          <td>208 (0.91%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-ZipFile-DW0Qr-src-iojunk-jl-read-10"></a>
+              208 (0.91%) samples spent in read<br />
+              0 (ex.),
+              208 (100.00%) (incl.)
+              when called from
+              #readuntil#292
+              <a href="io-jl-81a23b6072b201a5c2a3-line.html#Lio-jl-81a23b6072b201a5c2a3-line.html-666">line 666</a><br />
+            </div>
+            <div class="callees">
+              208 (100.00%)
+              samples spent calling
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-Type-404">Type</a><br />
+            </div>
+            <span class="code">    b = Vector{UInt8}(undef, 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-11"></a>11</td>
+          <td></td>
+          <td>2940 (12.84%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-ZipFile-DW0Qr-src-iojunk-jl-read-11"></a>
+              2940 (12.84%) samples spent in read<br />
+              0 (ex.),
+              2940 (100.00%) (incl.)
+              when called from
+              #readuntil#292
+              <a href="io-jl-81a23b6072b201a5c2a3-line.html#Lio-jl-81a23b6072b201a5c2a3-line.html-666">line 666</a><br />
+            </div>
+            <div class="callees">
+              238 (8.10%)
+              samples spent calling
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-read-404">read</a><br />
+              2702 (91.90%)
+              samples spent calling
+              <a href="ZipFile-jl-98f0a48d44abb6205093-line.html#SC-Users-Tims-PC-julia-packages-ZipFile-DW0Qr-src-ZipFile-jl-read-424">read</a><br />
+            </div>
+            <span class="code">    c = read(f, b)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    c[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Liojunk-jl-9f476ae8a436058696ec-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

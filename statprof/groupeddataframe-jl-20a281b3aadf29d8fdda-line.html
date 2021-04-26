@@ -1,0 +1,6101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\.julia\packages\DataFrames\GtZ1l\src\groupeddataframe\groupeddataframe.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Implementation note
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># There are two important design features of GroupedDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># 1. idx, starts, ends and keymap are by default left uninitialized;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    they get populated only on demand; this means that every GroupedDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    has lazy_lock field which is used to make sure that two threads concurrently
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    do not try to create them. The lock should be used in every function that
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    does a direct access to these fields via getfield.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># 2. Except for point 1 above currently fields of GroupedDataFrame are never
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    mutated after it is created. This means that internally when copying
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    a GroupedDataFrame they are not copied for efficiency. If in the future
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    operations that mutate GroupedDataFrame are introduced all non-copying
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    passing of the internal fields to a new GroupedDataFrame should be
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#    updated. Currently this applies to `getindex` and `combine_helper` functions
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    GroupedDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">The result of a [`groupby`](@ref) operation on an `AbstractDataFrame`; a
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">view into the `AbstractDataFrame` grouped by rows.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Not meant to be constructed directly, see `groupby`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">mutable struct GroupedDataFrame{T&lt;:AbstractDataFrame}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent::T
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    cols::Vector{Int}                    # columns used for grouping
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-26"></a>26</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    groups::Vector{Int}                  # group indices for each row in 0:ngroups, 0 skipped
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-27"></a>27</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    idx::Union{Vector{Int},Nothing}      # indexing vector sorting rows into groups
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-28"></a>28</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    starts::Union{Vector{Int},Nothing}   # starts of groups after permutation by idx
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-29"></a>29</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ends::Union{Vector{Int},Nothing}     # ends of groups after permutation by idx
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-30"></a>30</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ngroups::Int                         # number of groups
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-31"></a>31</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    keymap::Union{Dict{Any,Int},Nothing} # mapping of key tuples to group indices
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-32"></a>32</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    lazy_lock::Threads.ReentrantLock     # lock is needed to make lazy operations
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-33"></a>33</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                         # thread safe
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-34"></a>34</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-35"></a>35</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-36"></a>36</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function genkeymap(gd, cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-37"></a>37</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # currently we use Dict{Any,Int} because then field :keymap in GroupedDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-38"></a>38</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # has a concrete type which makes the access to it faster as we do not have a dynamic
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-39"></a>39</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # dispatch when indexing into it. In the future an optimization of this approach
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-40"></a>40</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # can be investigated (also taking compilation time into account).
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-41"></a>41</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d = Dict{Any,Int}()
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-42"></a>42</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    gdidx = gd.idx
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-43"></a>43</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    sizehint!(d, length(gd.starts))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-44"></a>44</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for (i, s) in enumerate(gd.starts)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-45"></a>45</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        d[getindex.(cols, gdidx[s])] = i
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-46"></a>46</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-47"></a>47</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-48"></a>48</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-49"></a>49</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-50"></a>50</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-groupeddataframe-groupeddataframe-jl-getproperty-50"></a>
+              11 (0.05%) samples spent in getproperty<br />
+              8 (100.00%) (ex.),
+              11 (100.00%) (incl.)
+              when called from
+              getindex
+              <a href="groupeddataframe-jl-20a281b3aadf29d8fdda-line.html#Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-200">line 200</a><br />
+            </div>
+            <span class="code">function Base.getproperty(gd::GroupedDataFrame, f::Symbol)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-51"></a>51</td>
+          <td>1 (0.0044%)</td>
+          <td>1 (0.0044%)</td>
+          <td>
+            <span class="code">    if f in (:idx, :starts, :ends)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-52"></a>52</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        # Group indices are computed lazily the first time they are accessed
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-53"></a>53</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        # Do not lock when field is already initialized
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-54"></a>54</td>
+          <td>3 (0.01%)</td>
+          <td>3 (0.01%)</td>
+          <td>
+            <span class="code">        if getfield(gd, f) === nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-55"></a>55</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            Threads.lock(gd.lazy_lock)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-56"></a>56</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            if getfield(gd, f) === nothing # Do not lock when field is already initialized
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-57"></a>57</td>
+          <td>1 (0.0044%)</td>
+          <td>4 (0.02%)</td>
+          <td>
+            <div class="callees">
+              3 (75.00%)
+              samples spent calling
+              <a href="typeinfer-jl-0c05ed03c25851e2996d-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-compiler-typeinfer-jl-typeinf_ext-596">typeinf_ext</a><br />
+            </div>
+            <span class="code">                gd.idx, gd.starts, gd.ends = compute_indices(gd.groups, gd.ngroups)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-58"></a>58</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-59"></a>59</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            Threads.unlock(gd.lazy_lock)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-60"></a>60</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-61"></a>61</td>
+          <td>4 (0.02%)</td>
+          <td>4 (0.02%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-groupeddataframe-groupeddataframe-jl-getproperty-61"></a>
+              1 (0.0044%) samples spent in getproperty<br />
+              1 (100.00%) (ex.),
+              1 (100.00%) (incl.)
+              when called from
+              getindex
+              <a href="groupeddataframe-jl-20a281b3aadf29d8fdda-line.html#Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-200">line 200</a><br />
+            </div>
+            <span class="code">        return getfield(gd, f)::Vector{Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-62"></a>62</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    elseif f === :keymap
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-63"></a>63</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        # Keymap is computed lazily the first time it is accessed
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-64"></a>64</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if getfield(gd, f) === nothing # Do not lock when field is already initialized
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-65"></a>65</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            Threads.lock(gd.lazy_lock)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-66"></a>66</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            if getfield(gd, f) === nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-67"></a>67</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                gd.keymap = genkeymap(gd, ntuple(i -&gt; parent(gd)[!, gd.cols[i]], length(gd.cols)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-68"></a>68</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-69"></a>69</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            Threads.unlock(gd.lazy_lock)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-70"></a>70</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-71"></a>71</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return getfield(gd, f)::Dict{Any,Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-72"></a>72</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-73"></a>73</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return getfield(gd, f)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-74"></a>74</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-75"></a>75</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-76"></a>76</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-77"></a>77</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.broadcastable(::GroupedDataFrame) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-78"></a>78</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;broadcasting over `GroupedDataFrame`s is reserved&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-79"></a>79</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-80"></a>80</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-81"></a>81</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(gd::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-82"></a>82</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-83"></a>83</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Return the parent data frame of `gd`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-84"></a>84</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-85"></a>85</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.parent(gd::GroupedDataFrame) = getfield(gd, :parent)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-86"></a>86</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-87"></a>87</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.:(==)(gd1::GroupedDataFrame, gd2::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-88"></a>88</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    gd1.cols == gd2.cols &amp;&amp;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-89"></a>89</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        length(gd1) == length(gd2) &amp;&amp;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-90"></a>90</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        all(x -&gt; ==(x...), zip(gd1, gd2))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-91"></a>91</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-92"></a>92</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-93"></a>93</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.isequal(gd1::GroupedDataFrame, gd2::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-94"></a>94</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isequal(gd1.cols, gd2.cols) &amp;&amp;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-95"></a>95</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        isequal(length(gd1), length(gd2)) &amp;&amp;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-96"></a>96</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        all(x -&gt; isequal(x...), zip(gd1, gd2))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-97"></a>97</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-98"></a>98</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-99"></a>99</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.names(gd::GroupedDataFrame) = names(gd.parent)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-100"></a>100</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.names(gd::GroupedDataFrame, cols) = names(gd.parent, cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-101"></a>101</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">_names(gd::GroupedDataFrame) = _names(gd.parent)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-102"></a>102</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-103"></a>103</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function DataFrame(gd::GroupedDataFrame; copycols::Bool=true, keepkeys::Bool=true)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-104"></a>104</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if !copycols
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-105"></a>105</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;It is not possible to construct a `DataFrame`&quot; *
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-106"></a>106</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                            &quot;from GroupedDataFrame with `copycols=false`&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-107"></a>107</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-108"></a>108</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    length(gd) == 0 &amp;&amp; return similar(parent(gd), 0)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-109"></a>109</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    gdidx = gd.idx
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-110"></a>110</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    idx = similar(gdidx)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-111"></a>111</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    doff = 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-112"></a>112</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for (s,e) in zip(gd.starts, gd.ends)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-113"></a>113</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        n = e - s + 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-114"></a>114</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        copyto!(idx, doff, gdidx, s, n)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-115"></a>115</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        doff += n
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-116"></a>116</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-117"></a>117</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    resize!(idx, doff - 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-118"></a>118</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if keepkeys
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-119"></a>119</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return parent(gd)[idx, :]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-120"></a>120</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-121"></a>121</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return parent(gd)[idx, Not(gd.cols)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-122"></a>122</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-123"></a>123</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-124"></a>124</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-125"></a>125</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-126"></a>126</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-127"></a>127</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Accessing group indices, columns, and values
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-128"></a>128</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-129"></a>129</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-130"></a>130</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-131"></a>131</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    groupindices(gd::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-132"></a>132</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-133"></a>133</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Return a vector of group indices for each row of `parent(gd)`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-134"></a>134</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-135"></a>135</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Rows appearing in group `gd[i]` are attributed index `i`. Rows not present in
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-136"></a>136</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">any group are attributed `missing` (this can happen if `skipmissing=true` was
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-137"></a>137</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">passed when creating `gd`, or if `gd` is a subset from
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-138"></a>138</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">a larger [`GroupedDataFrame`](@ref)).
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-139"></a>139</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-140"></a>140</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">groupindices(gd::GroupedDataFrame) = replace(gd.groups, 0=&gt;missing)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-141"></a>141</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-142"></a>142</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-143"></a>143</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    groupcols(gd::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-144"></a>144</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-145"></a>145</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Return a vector of `Symbol` column names in `parent(gd)` used for grouping.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-146"></a>146</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-147"></a>147</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">groupcols(gd::GroupedDataFrame) = _names(gd)[gd.cols]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-148"></a>148</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-149"></a>149</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-150"></a>150</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    valuecols(gd::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-151"></a>151</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-152"></a>152</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Return a vector of `Symbol` column names in `parent(gd)` not used for grouping.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-153"></a>153</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-154"></a>154</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">valuecols(gd::GroupedDataFrame) = _names(gd)[Not(gd.cols)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-155"></a>155</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-156"></a>156</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-157"></a>157</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Get grouping variable index by its name
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-158"></a>158</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function _groupvar_idx(gd::GroupedDataFrame, name::Symbol, strict::Bool)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-159"></a>159</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    i = findfirst(==(name), groupcols(gd))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-160"></a>160</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    i === nothing &amp;&amp; strict &amp;&amp; throw(ArgumentError(&quot;$name is not a grouping column&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-161"></a>161</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return i
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-162"></a>162</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-163"></a>163</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-164"></a>164</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Get values of grouping columns for single group
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-165"></a>165</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">_groupvalues(gd::GroupedDataFrame, i::Integer) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-166"></a>166</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    gd.parent[gd.idx[gd.starts[i]], gd.cols]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-167"></a>167</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-168"></a>168</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Get values of single grouping column for single group
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-169"></a>169</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">_groupvalues(gd::GroupedDataFrame, i::Integer, col::Integer) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-170"></a>170</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    gd.parent[gd.idx[gd.starts[i]], gd.cols[col]]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-171"></a>171</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">_groupvalues(gd::GroupedDataFrame, i::Integer, col::Symbol) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-172"></a>172</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _groupvalues(gd, i, _groupvar_idx(gd, col, true))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-173"></a>173</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-174"></a>174</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-175"></a>175</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-176"></a>176</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Vector interface and integer indexing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-177"></a>177</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-178"></a>178</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-179"></a>179</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.length(gd::GroupedDataFrame) = gd.ngroups
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-180"></a>180</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-181"></a>181</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.iterate(gd::GroupedDataFrame, i=1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-182"></a>182</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if i &gt; length(gd)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-183"></a>183</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-184"></a>184</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-185"></a>185</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        (view(gd.parent, gd.idx[gd.starts[i]:gd.ends[i]], :), i+1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-186"></a>186</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-187"></a>187</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-188"></a>188</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-189"></a>189</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Compat.lastindex(gd::GroupedDataFrame) = gd.ngroups
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-190"></a>190</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.first(gd::GroupedDataFrame) = gd[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-191"></a>191</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.last(gd::GroupedDataFrame) = gd[end]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-192"></a>192</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-193"></a>193</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># These have to be defined for some to_indices() logic to work, as long
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-194"></a>194</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># as GroupedDataFrame is not &lt;: AbstractArray
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-195"></a>195</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.IndexStyle(::Type{&lt;:GroupedDataFrame}) = IndexLinear()
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-196"></a>196</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.IndexStyle(::GroupedDataFrame) = IndexLinear()
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-197"></a>197</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.keys(::IndexLinear, gd::GroupedDataFrame) = Base.OneTo(length(gd))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-198"></a>198</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-199"></a>199</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-groupeddataframe-groupeddataframe-jl-getindex-199"></a>
+              69 (0.30%) samples spent in getindex<br />
+              3 (100.00%) (ex.),
+              69 (100.00%) (incl.)
+              when called from
+              include
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#Lboot-jl-fedc2b778ea8a446fb45-line.html-328">line 328</a><br />
+            </div>
+            <span class="code"># Single integer indexing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-200"></a>200</td>
+          <td>3 (0.01%)</td>
+          <td>69 (0.30%)</td>
+          <td>
+            <div class="callees">
+              17 (24.64%)
+              samples spent calling
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-view-91">view</a><br />
+              1 (1.45%)
+              samples spent calling
+              <a href="array-jl-5a33eab667063cb89d51-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-array-jl-getindex-728">getindex</a><br />
+              2 (2.90%)
+              samples spent calling
+              <a href="array-jl-5a33eab667063cb89d51-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-array-jl-getindex-738">getindex</a><br />
+              11 (15.94%)
+              samples spent calling
+              <a href="groupeddataframe-jl-20a281b3aadf29d8fdda-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-groupeddataframe-groupeddataframe-jl-getproperty-50">getproperty</a><br />
+              34 (49.28%)
+              samples spent calling
+              <a href="boot-jl-fedc2b778ea8a446fb45-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-boot-jl-getindex-404">getindex</a><br />
+              1 (1.45%)
+              samples spent calling
+              <a href="groupeddataframe-jl-20a281b3aadf29d8fdda-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-groupeddataframe-groupeddataframe-jl-getproperty-61">getproperty</a><br />
+            </div>
+            <span class="code">Base.getindex(gd::GroupedDataFrame, idx::Integer) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-201"></a>201</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    view(gd.parent, gd.idx[gd.starts[idx]:gd.ends[idx]], :)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-202"></a>202</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-203"></a>203</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Index with array of integers OR bools
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-204"></a>204</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.getindex(gd::GroupedDataFrame, idxs::AbstractVector{&lt;:Integer})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-205"></a>205</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    new_starts = gd.starts[idxs]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-206"></a>206</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    new_ends = gd.ends[idxs]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-207"></a>207</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if !allunique(new_starts)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-208"></a>208</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;duplicates in idxs argument are not allowed&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-209"></a>209</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-210"></a>210</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    new_groups = zeros(Int, length(gd.groups))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-211"></a>211</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    idx = gd.idx
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-212"></a>212</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for i in eachindex(new_starts)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-213"></a>213</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        @inbounds for j in new_starts[i]:new_ends[i]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-214"></a>214</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            new_groups[idx[j]] = i
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-215"></a>215</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-216"></a>216</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-217"></a>217</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    GroupedDataFrame(gd.parent, gd.cols, new_groups, gd.idx,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-218"></a>218</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                     new_starts, new_ends, length(new_starts), nothing,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-219"></a>219</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                     Threads.ReentrantLock())
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-220"></a>220</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-221"></a>221</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-222"></a>222</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Index with colon (creates copy)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-223"></a>223</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.getindex(gd::GroupedDataFrame, idxs::Colon)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-224"></a>224</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    Threads.lock(gd.lazy_lock)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-225"></a>225</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    new_gd = GroupedDataFrame(gd.parent, gd.cols, gd.groups, getfield(gd, :idx),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-226"></a>226</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                              getfield(gd, :starts), getfield(gd, :ends), gd.ngroups,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-227"></a>227</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                              getfield(gd, :keymap), Threads.ReentrantLock())
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-228"></a>228</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    Threads.unlock(gd.lazy_lock)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-229"></a>229</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return new_gd
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-230"></a>230</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-231"></a>231</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-232"></a>232</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-233"></a>233</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-234"></a>234</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># GroupKey and GroupKeys
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-235"></a>235</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-236"></a>236</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-237"></a>237</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-238"></a>238</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    GroupKey{T&lt;:GroupedDataFrame}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-239"></a>239</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-240"></a>240</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Key for one of the groups of a [`GroupedDataFrame`](@ref). Contains the values
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-241"></a>241</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">of the corresponding grouping columns and behaves similarly to a `NamedTuple`,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-242"></a>242</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">but using it to index its `GroupedDataFrame` is much more effecient than using the
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-243"></a>243</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">equivalent `Tuple` or `NamedTuple`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-244"></a>244</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-245"></a>245</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Instances of this type are returned by `keys(::GroupedDataFrame)` and are not
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-246"></a>246</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">meant to be constructed directly.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-247"></a>247</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-248"></a>248</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">See [`keys(::GroupedDataFrame)`](@ref) for more information.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-249"></a>249</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-250"></a>250</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">struct GroupKey{T&lt;:GroupedDataFrame}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-251"></a>251</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent::T
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-252"></a>252</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    idx::Int
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-253"></a>253</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-254"></a>254</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-255"></a>255</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.show(io::IO, k::GroupKey)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-256"></a>256</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    print(io, &quot;GroupKey: &quot;)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-257"></a>257</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    show(io, NamedTuple(k))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-258"></a>258</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-259"></a>259</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-260"></a>260</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.parent(key::GroupKey) = getfield(key, :parent)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-261"></a>261</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.length(key::GroupKey) = length(parent(key).cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-262"></a>262</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.names(key::GroupKey) = string.(groupcols(parent(key)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-263"></a>263</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Private fields are never exposed since they can conflict with column names
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-264"></a>264</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.propertynames(key::GroupKey, private::Bool=false) = groupcols(parent(key))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-265"></a>265</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.keys(key::GroupKey) = propertynames(key)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-266"></a>266</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.haskey(key::GroupKey, idx::Symbol) = idx in groupcols(parent(key))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-267"></a>267</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.haskey(key::GroupKey, idx::AbstractString) = haskey(key, Symbol(idx))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-268"></a>268</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.haskey(key::GroupKey, idx::Union{Signed,Unsigned}) = 1 &lt;= idx &lt;= length(key)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-269"></a>269</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.values(key::GroupKey) = Tuple(_groupvalues(parent(key), getfield(key, :idx)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-270"></a>270</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.iterate(key::GroupKey, i::Integer=1) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-271"></a>271</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    i &lt;= length(key) ? (key[i], i + 1) : nothing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-272"></a>272</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.getindex(key::GroupKey, i::Integer) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-273"></a>273</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    _groupvalues(parent(key), getfield(key, :idx), i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-274"></a>274</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-275"></a>275</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.getindex(key::GroupKey, n::Symbol)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-276"></a>276</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    try
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-277"></a>277</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return _groupvalues(parent(key), getfield(key, :idx), n)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-278"></a>278</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    catch e
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-279"></a>279</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(KeyError(n))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-280"></a>280</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-281"></a>281</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-282"></a>282</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-283"></a>283</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.getindex(key::GroupKey, n::AbstractString) = key[Symbol(n)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-284"></a>284</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-285"></a>285</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.getproperty(key::GroupKey, p::Symbol)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-286"></a>286</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    try
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-287"></a>287</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return key[p]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-288"></a>288</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    catch e
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-289"></a>289</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;$(typeof(key)) has no property $p&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-290"></a>290</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-291"></a>291</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-292"></a>292</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-293"></a>293</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.getproperty(key::GroupKey, p::AbstractString) = getproperty(key, Symbol(p))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-294"></a>294</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-295"></a>295</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.NamedTuple(key::GroupKey)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-296"></a>296</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    N = NamedTuple{Tuple(groupcols(parent(key)))}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-297"></a>297</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    N(_groupvalues(parent(key), getfield(key, :idx)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-298"></a>298</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-299"></a>299</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.Tuple(key::GroupKey) = values(key)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-300"></a>300</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-301"></a>301</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-302"></a>302</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-303"></a>303</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    GroupKeys{T&lt;:GroupedDataFrame} &lt;: AbstractVector{GroupKey{T}}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-304"></a>304</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-305"></a>305</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">A vector containing all [`GroupKey`](@ref) objects for a given
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-306"></a>306</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">[`GroupedDataFrame`](@ref).
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-307"></a>307</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-308"></a>308</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">See [`keys(::GroupedDataFrame)`](@ref) for more information.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-309"></a>309</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-310"></a>310</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">struct GroupKeys{T&lt;:GroupedDataFrame} &lt;: AbstractVector{GroupKey{T}}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-311"></a>311</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent::T
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-312"></a>312</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-313"></a>313</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-314"></a>314</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.parent(gk::GroupKeys) = gk.parent
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-315"></a>315</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-316"></a>316</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.size(gk::GroupKeys) = (length(parent(gk)),)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-317"></a>317</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.IndexStyle(::Type{&lt;:GroupKeys}) = IndexLinear()
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-318"></a>318</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@Base.propagate_inbounds function Base.getindex(gk::GroupKeys, i::Integer)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-319"></a>319</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    @boundscheck checkbounds(gk, i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-320"></a>320</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return GroupKey(parent(gk), i)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-321"></a>321</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-322"></a>322</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-323"></a>323</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-324"></a>324</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-325"></a>325</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Non-standard indexing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-326"></a>326</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-327"></a>327</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-328"></a>328</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Non-standard indexing relies on converting to integer indices first
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-329"></a>329</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># The full version (to_indices) is required rather than to_index even though
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-330"></a>330</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># GroupedDataFrame behaves as a 1D array due to the behavior of Colon and Not.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-331"></a>331</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Note that this behavior would be the default if it was &lt;:AbstractArray
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-332"></a>332</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.getindex(gd::GroupedDataFrame, idx...)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-333"></a>333</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    length(idx) == 1 || throw(ArgumentError(&quot;GroupedDataFrame requires a single index&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-334"></a>334</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return getindex(gd, Base.to_indices(gd, idx)...)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-335"></a>335</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-336"></a>336</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-337"></a>337</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># The allowed key types for dictionary-like indexing
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-338"></a>338</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">const GroupKeyTypes = Union{GroupKey, Tuple, NamedTuple}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-339"></a>339</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># All allowed scalar index types
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-340"></a>340</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">const GroupIndexTypes = Union{Integer, GroupKeyTypes}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-341"></a>341</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-342"></a>342</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Find integer index for dictionary keys
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-343"></a>343</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.to_index(gd::GroupedDataFrame, key::GroupKey)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-344"></a>344</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    gd === parent(key) &amp;&amp; return getfield(key, :idx)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-345"></a>345</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ErrorException(&quot;Cannot use a GroupKey to index a GroupedDataFrame &quot; *
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-346"></a>346</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                         &quot;other than the one it was derived from.&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-347"></a>347</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-348"></a>348</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-349"></a>349</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.to_index(gd::GroupedDataFrame, key::Tuple) = gd.keymap[key]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-350"></a>350</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-351"></a>351</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.to_index(gd::GroupedDataFrame, key::NamedTuple{N}) where {N}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-352"></a>352</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if length(key) != length(gd.cols) || any(n != _names(gd)[c] for (n, c) in zip(N, gd.cols))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-353"></a>353</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(KeyError(key))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-354"></a>354</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-355"></a>355</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return Base.to_index(gd, Tuple(key))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-356"></a>356</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-357"></a>357</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-358"></a>358</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Array of (possibly non-standard) indices
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-359"></a>359</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.to_index(gd::GroupedDataFrame, idxs::AbstractVector{T}) where {T}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-360"></a>360</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # A concrete eltype which is &lt;: GroupKeyTypes, don&#39;t need to check
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-361"></a>361</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if isconcretetype(T) &amp;&amp; T &lt;: GroupKeyTypes
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-362"></a>362</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return [Base.to_index(gd, i) for i in idxs]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-363"></a>363</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-364"></a>364</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-365"></a>365</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Edge case - array is empty
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-366"></a>366</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isempty(idxs) &amp;&amp; return Int[]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-367"></a>367</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-368"></a>368</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Infer eltype based on type of first index, expect rest to match
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-369"></a>369</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    idx1 = idxs[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-370"></a>370</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    E1 = typeof(idx1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-371"></a>371</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-372"></a>372</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    E = if E1 &lt;: Integer &amp;&amp; E1 !== Bool
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-373"></a>373</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        Integer
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-374"></a>374</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    elseif E1 &lt;: GroupKey
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-375"></a>375</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        GroupKey
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-376"></a>376</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    elseif E1 &lt;: Tuple
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-377"></a>377</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        Tuple
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-378"></a>378</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    elseif E1 &lt;: NamedTuple
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-379"></a>379</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        NamedTuple
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-380"></a>380</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-381"></a>381</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;Invalid index: $idx1 of type $E1&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-382"></a>382</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-383"></a>383</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-384"></a>384</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # Convert each index to integer format
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-385"></a>385</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ints = Vector{Int}(undef, length(idxs))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-386"></a>386</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for (i, idx) in enumerate(idxs)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-387"></a>387</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if !(idx isa GroupIndexTypes) || idx isa Bool
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-388"></a>388</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            throw(ArgumentError(&quot;Invalid index: $idx of type $(typeof(idx))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-389"></a>389</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-390"></a>390</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        idx isa E || throw(ArgumentError(&quot;Mixed index types in array not allowed&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-391"></a>391</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        ints[i] = Base.to_index(gd, idx)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-392"></a>392</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-393"></a>393</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-394"></a>394</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return ints
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-395"></a>395</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-396"></a>396</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-397"></a>397</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-398"></a>398</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-399"></a>399</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Indexing with Not/InvertedIndex
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-400"></a>400</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-401"></a>401</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-402"></a>402</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># InvertedIndex wrapping any other valid index type
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-403"></a>403</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># to_indices() is needed here rather than to_index() in order to override the
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-404"></a>404</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># to_indices(::Any, ::Tuple{Not}) methods defined in InvertedIndices.jl
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-405"></a>405</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.to_indices(gd::GroupedDataFrame, (idx,)::Tuple{&lt;:Not})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-406"></a>406</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    (skip_idx,) = Base.to_indices(gd, (idx.skip,))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-407"></a>407</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    idxs = Base.OneTo(length(gd))[Not(skip_idx)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-408"></a>408</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return (idxs,)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-409"></a>409</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-410"></a>410</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-411"></a>411</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># InvertedIndex wrapping a boolean array
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-412"></a>412</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># The definition above works but we need to define specialized methods to avoid
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-413"></a>413</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># ambiguity in dispatch
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-414"></a>414</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.to_indices(gd::GroupedDataFrame,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-415"></a>415</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                         (idx,)::Tuple{Not{&lt;:Union{BitArray{1}, Vector{Bool}}}})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-416"></a>416</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    (findall(!, idx.skip),)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-417"></a>417</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-418"></a>418</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.to_indices(gd::GroupedDataFrame,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-419"></a>419</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                         (idx,)::Tuple{Not{&lt;:AbstractVector{Bool}}})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-420"></a>420</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    (findall(!, idx.skip),)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-421"></a>421</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-422"></a>422</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-423"></a>423</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-424"></a>424</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-425"></a>425</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Dictionary interface
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-426"></a>426</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-427"></a>427</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-428"></a>428</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-429"></a>429</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    keys(gd::GroupedDataFrame)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-430"></a>430</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-431"></a>431</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Get the set of keys for each group of the `GroupedDataFrame` `gd` as a
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-432"></a>432</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">[`GroupKeys`](@ref) object. Each key is a [`GroupKey`](@ref), which behaves like
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-433"></a>433</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">a `NamedTuple` holding the values of the grouping columns for a given group.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-434"></a>434</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Unlike the equivalent `Tuple` and `NamedTuple`, these keys can be used to index
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-435"></a>435</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">into `gd` efficiently. The ordering of the keys is identical to the ordering of
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-436"></a>436</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">the groups of `gd` under iteration and integer indexing.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-437"></a>437</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-438"></a>438</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Examples
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-439"></a>439</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-440"></a>440</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest groupkeys
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-441"></a>441</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; df = DataFrame(a = repeat([:foo, :bar, :baz], outer=[4]),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-442"></a>442</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                      b = repeat([2, 1], outer=[6]),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-443"></a>443</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                      c = 1:12);
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-444"></a>444</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-445"></a>445</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; gd = groupby(df, [:a, :b])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-446"></a>446</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">GroupedDataFrame with 6 groups based on keys: a, b
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-447"></a>447</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">First Group (2 rows): a = :foo, b = 2
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-448"></a>448</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-449"></a>449</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-450"></a>450</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-451"></a>451</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ foo    │ 2     │ 1     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-452"></a>452</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ foo    │ 2     │ 7     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-453"></a>453</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">⋮
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-454"></a>454</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Last Group (2 rows): a = :baz, b = 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-455"></a>455</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-456"></a>456</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-457"></a>457</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-458"></a>458</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ baz    │ 1     │ 6     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-459"></a>459</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ baz    │ 1     │ 12    │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-460"></a>460</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-461"></a>461</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; keys(gd)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-462"></a>462</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">6-element DataFrames.GroupKeys{GroupedDataFrame{DataFrame}}:
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-463"></a>463</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> GroupKey: (a = :foo, b = 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-464"></a>464</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> GroupKey: (a = :bar, b = 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-465"></a>465</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> GroupKey: (a = :baz, b = 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-466"></a>466</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> GroupKey: (a = :foo, b = 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-467"></a>467</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> GroupKey: (a = :bar, b = 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-468"></a>468</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> GroupKey: (a = :baz, b = 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-469"></a>469</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-470"></a>470</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-471"></a>471</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`GroupKey` objects behave similarly to `NamedTuple`s:
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-472"></a>472</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-473"></a>473</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest groupkeys
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-474"></a>474</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; k = keys(gd)[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-475"></a>475</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">GroupKey: (a = :foo, b = 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-476"></a>476</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-477"></a>477</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; keys(k)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-478"></a>478</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">(:a, :b)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-479"></a>479</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-480"></a>480</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; values(k)  # Same as Tuple(k)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-481"></a>481</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">(:foo, 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-482"></a>482</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-483"></a>483</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; NamedTuple(k)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-484"></a>484</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">(a = :foo, b = 2)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-485"></a>485</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-486"></a>486</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; k.a
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-487"></a>487</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">:foo
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-488"></a>488</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-489"></a>489</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; k[:a]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-490"></a>490</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">:foo
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-491"></a>491</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-492"></a>492</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; k[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-493"></a>493</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">:foo
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-494"></a>494</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-495"></a>495</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-496"></a>496</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Keys can be used as indices to retrieve the corresponding group from their
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-497"></a>497</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`GroupedDataFrame`:
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-498"></a>498</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-499"></a>499</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest groupkeys
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-500"></a>500</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; gd[k]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-501"></a>501</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">2×3 SubDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-502"></a>502</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-503"></a>503</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-504"></a>504</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-505"></a>505</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ foo    │ 2     │ 1     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-506"></a>506</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ foo    │ 2     │ 7     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-507"></a>507</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-508"></a>508</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; gd[keys(gd)[1]] == gd[1]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-509"></a>509</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">true
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-510"></a>510</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-511"></a>511</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-512"></a>512</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.keys(gd::GroupedDataFrame) = GroupKeys(gd)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-513"></a>513</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-514"></a>514</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.haskey(gd::GroupedDataFrame, key::GroupKey)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-515"></a>515</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if gd === parent(key)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-516"></a>516</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if 1 &lt;= getfield(key, :idx) &lt;= length(gd)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-517"></a>517</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return true
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-518"></a>518</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-519"></a>519</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            throw(BoundsError(gd, getfield(key, :idx)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-520"></a>520</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-521"></a>521</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-522"></a>522</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        msg = &quot;The parent of key does not match the passed GroupedDataFrame&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-523"></a>523</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(msg))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-524"></a>524</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-525"></a>525</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-526"></a>526</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-527"></a>527</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.haskey(gd::GroupedDataFrame, key::Tuple)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-528"></a>528</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if length(key) != length(gd.cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-529"></a>529</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return throw(ArgumentError(&quot;The length of key does not match the &quot; *
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-530"></a>530</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                   &quot;number of grouping columns&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-531"></a>531</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-532"></a>532</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return haskey(gd.keymap, key)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-533"></a>533</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-534"></a>534</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-535"></a>535</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.haskey(gd::GroupedDataFrame, key::NamedTuple{N}) where {N}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-536"></a>536</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if any(n != _names(gd)[c] for (n, c) in zip(N, gd.cols))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-537"></a>537</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return throw(ArgumentError(&quot;The column names of key do not match &quot; *
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-538"></a>538</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                   &quot;the names of grouping columns&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-539"></a>539</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-540"></a>540</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return haskey(gd, Tuple(key))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-541"></a>541</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-542"></a>542</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-543"></a>543</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.haskey(gd::GroupedDataFrame, key::Union{Signed,Unsigned}) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-544"></a>544</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    1 &lt;= key &lt;= length(gd)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-545"></a>545</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-546"></a>546</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-547"></a>547</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    get(gd::GroupedDataFrame, key, default)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-548"></a>548</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-549"></a>549</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Get a group based on the values of the grouping columns.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-550"></a>550</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-551"></a>551</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`key` may be a `NamedTuple` or `Tuple` of grouping column values (in the same
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-552"></a>552</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">order as the `cols` argument to `groupby`).
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-553"></a>553</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-554"></a>554</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Examples
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-555"></a>555</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-556"></a>556</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```jldoctest
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-557"></a>557</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; df = DataFrame(a = repeat([:foo, :bar, :baz], outer=[2]),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-558"></a>558</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                      b = repeat([2, 1], outer=[3]),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-559"></a>559</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                      c = 1:6);
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-560"></a>560</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-561"></a>561</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; gd = groupby(df, :a)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-562"></a>562</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">GroupedDataFrame with 3 groups based on key: a
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-563"></a>563</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">First Group (2 rows): a = :foo
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-564"></a>564</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-565"></a>565</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-566"></a>566</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-567"></a>567</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ foo    │ 2     │ 1     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-568"></a>568</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ foo    │ 1     │ 4     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-569"></a>569</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">⋮
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-570"></a>570</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Last Group (2 rows): a = :baz
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-571"></a>571</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-572"></a>572</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-573"></a>573</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-574"></a>574</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ baz    │ 2     │ 3     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-575"></a>575</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ baz    │ 1     │ 6     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-576"></a>576</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-577"></a>577</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; get(gd, (a=:bar,), nothing)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-578"></a>578</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">2×3 SubDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-579"></a>579</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-580"></a>580</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-581"></a>581</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-582"></a>582</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ bar    │ 1     │ 2     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-583"></a>583</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ bar    │ 2     │ 5     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-584"></a>584</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-585"></a>585</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; get(gd, (:baz,), nothing)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-586"></a>586</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">2×3 SubDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-587"></a>587</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ Row │ a      │ b     │ c     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-588"></a>588</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│     │ Symbol │ Int64 │ Int64 │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-589"></a>589</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">├─────┼────────┼───────┼───────┤
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-590"></a>590</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 1   │ baz    │ 2     │ 3     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-591"></a>591</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">│ 2   │ baz    │ 1     │ 6     │
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-592"></a>592</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-593"></a>593</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">julia&gt; get(gd, (:qux,), nothing)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-594"></a>594</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-595"></a>595</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-596"></a>596</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function Base.get(gd::GroupedDataFrame, key::Union{Tuple, NamedTuple}, default)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-597"></a>597</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    try
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-598"></a>598</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return gd[key]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-599"></a>599</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    catch KeyError
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-600"></a>600</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        return default
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-601"></a>601</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-602"></a>602</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

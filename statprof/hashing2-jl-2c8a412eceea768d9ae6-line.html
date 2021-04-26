@@ -1,0 +1,1862 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\AppData\Local\Julia-1.2.0\bin\..\share\julia\base\.\hashing2.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># This file is a part of Julia. License is MIT: https://julialang.org/license
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## efficient value-based hashing of integers ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function hash_integer(n::Integer, h::UInt)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h ⊻= hash_uint((n % UInt) ⊻ h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = abs(n)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n &gt;&gt;&gt;= sizeof(UInt) &lt;&lt; 3
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    while n != 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        h ⊻= hash_uint((n % UInt) ⊻ h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        n &gt;&gt;&gt;= sizeof(UInt) &lt;&lt; 3
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return h
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function hash_integer(n::BigInt, h::UInt)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s = n.size
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s == 0 &amp;&amp; return hash_integer(0, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    p = convert(Ptr{UInt}, n.d)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    b = unsafe_load(p)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h ⊻= hash_uint(ifelse(s &lt; 0, -b, b) ⊻ h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    for k = 2:abs(s)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        h ⊻= hash_uint(unsafe_load(p, k) ⊻ h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return h
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-26"></a>26</td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-hashing2-jl-hashrows_col-26"></a>
+              2 (0.0087%) samples spent in hashrows_col!<br />
+              2 (100.00%) (ex.),
+              2 (100.00%) (incl.)
+              when called from
+              row_group_slots
+              <a href="utils-jl-a7ac6021c5aeb371f7d8-line.html#Lutils-jl-a7ac6021c5aeb371f7d8-line.html-70">line 70</a><br />
+            </div>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-27"></a>27</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-28"></a>28</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## generic hashing for rational values ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-29"></a>29</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-30"></a>30</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function hash(x::Real, h::UInt)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-31"></a>31</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # decompose x as num*2^pow/den
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-32"></a>32</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    num, pow, den = decompose(x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-33"></a>33</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-34"></a>34</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # handle special values
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-35"></a>35</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    num == 0 &amp;&amp; den == 0 &amp;&amp; return hash(NaN, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-36"></a>36</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    num == 0 &amp;&amp; return hash(ifelse(den &gt; 0, 0.0, -0.0), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-37"></a>37</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    den == 0 &amp;&amp; return hash(ifelse(num &gt; 0, Inf, -Inf), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-38"></a>38</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-39"></a>39</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # normalize decomposition
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-40"></a>40</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if den &lt; 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-41"></a>41</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        num = -num
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-42"></a>42</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        den = -den
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-43"></a>43</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-44"></a>44</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    z = trailing_zeros(num)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-45"></a>45</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if z != 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-46"></a>46</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        num &gt;&gt;= z
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-47"></a>47</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        pow += z
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-48"></a>48</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-49"></a>49</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    z = trailing_zeros(den)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-50"></a>50</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if z != 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-51"></a>51</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        den &gt;&gt;= z
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-52"></a>52</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        pow -= z
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-53"></a>53</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-54"></a>54</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-55"></a>55</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # handle values representable as Int64, UInt64, Float64
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-56"></a>56</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if den == 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-57"></a>57</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        left = ndigits0z(num,2) + pow
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-58"></a>58</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        right = trailing_zeros(num) + pow
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-59"></a>59</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if -1074 &lt;= right
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-60"></a>60</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            if 0 &lt;= right &amp;&amp; left &lt;= 64
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-61"></a>61</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                left &lt;= 63                     &amp;&amp; return hash(Int64(num) &lt;&lt; Int(pow), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-62"></a>62</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                signbit(num) == signbit(den)   &amp;&amp; return hash(UInt64(num) &lt;&lt; Int(pow), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-63"></a>63</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            end # typemin(Int64) handled by Float64 case
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-64"></a>64</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            left &lt;= 1024 &amp;&amp; left - right &lt;= 53 &amp;&amp; return hash(ldexp(Float64(num),pow), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-65"></a>65</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-66"></a>66</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-67"></a>67</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-68"></a>68</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # handle generic rational values
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-69"></a>69</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h = hash_integer(den, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-70"></a>70</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h = hash_integer(pow, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-71"></a>71</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h = hash_integer(num, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-72"></a>72</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return h
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-73"></a>73</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-74"></a>74</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-75"></a>75</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">#=
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-76"></a>76</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`decompose(x)`: non-canonical decomposition of rational values as `num*2^pow/den`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-77"></a>77</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-78"></a>78</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">The decompose function is the point where rational-valued numeric types that support
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-79"></a>79</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">hashing hook into the hashing protocol. `decompose(x)` should return three integer
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-80"></a>80</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">values `num, pow, den`, such that the value of `x` is mathematically equal to
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-81"></a>81</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-82"></a>82</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    num*2^pow/den
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-83"></a>83</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-84"></a>84</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">The decomposition need not be canonical in the sense that it just needs to be *some*
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-85"></a>85</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">way to express `x` in this form, not any particular way – with the restriction that
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-86"></a>86</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`num` and `den` may not share any odd common factors. They may, however, have powers
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-87"></a>87</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">of two in common – the generic hashing code will normalize those as necessary.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-88"></a>88</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-89"></a>89</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Special values:
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-90"></a>90</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-91"></a>91</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> - `x` is zero: `num` should be zero and `den` should have the same sign as `x`
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-92"></a>92</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> - `x` is infinite: `den` should be zero and `num` should have the same sign as `x`
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-93"></a>93</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"> - `x` is not a number: `num` and `den` should both be zero
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-94"></a>94</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">=#
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-95"></a>95</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-96"></a>96</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">decompose(x::Integer) = x, 0, 1
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-97"></a>97</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">decompose(x::Rational) = numerator(x), 0, denominator(x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-98"></a>98</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-99"></a>99</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function decompose(x::Float16)::NTuple{3,Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-100"></a>100</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isnan(x) &amp;&amp; return 0, 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-101"></a>101</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isinf(x) &amp;&amp; return ifelse(x &lt; 0, -1, 1), 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-102"></a>102</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = reinterpret(UInt16, x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-103"></a>103</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s = (n &amp; 0x03ff) % Int16
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-104"></a>104</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    e = ((n &amp; 0x7c00) &gt;&gt; 10) % Int
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-105"></a>105</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s |= Int16(e != 0) &lt;&lt; 10
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-106"></a>106</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d = ifelse(signbit(x), -1, 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-107"></a>107</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s, e - 25 + (e == 0), d
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-108"></a>108</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-109"></a>109</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-110"></a>110</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function decompose(x::Float32)::NTuple{3,Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-111"></a>111</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isnan(x) &amp;&amp; return 0, 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-112"></a>112</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isinf(x) &amp;&amp; return ifelse(x &lt; 0, -1, 1), 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-113"></a>113</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = reinterpret(UInt32, x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-114"></a>114</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s = (n &amp; 0x007fffff) % Int32
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-115"></a>115</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    e = ((n &amp; 0x7f800000) &gt;&gt; 23) % Int
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-116"></a>116</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s |= Int32(e != 0) &lt;&lt; 23
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-117"></a>117</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d = ifelse(signbit(x), -1, 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-118"></a>118</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s, e - 150 + (e == 0), d
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-119"></a>119</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-120"></a>120</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-121"></a>121</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function decompose(x::Float64)::Tuple{Int64, Int, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-122"></a>122</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isnan(x) &amp;&amp; return 0, 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-123"></a>123</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isinf(x) &amp;&amp; return ifelse(x &lt; 0, -1, 1), 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-124"></a>124</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    n = reinterpret(UInt64, x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-125"></a>125</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s = (n &amp; 0x000fffffffffffff) % Int64
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-126"></a>126</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    e = ((n &amp; 0x7ff0000000000000) &gt;&gt; 52) % Int
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-127"></a>127</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s |= Int64(e != 0) &lt;&lt; 52
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-128"></a>128</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    d = ifelse(signbit(x), -1, 1)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-129"></a>129</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s, e - 1075 + (e == 0), d
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-130"></a>130</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-131"></a>131</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-132"></a>132</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function decompose(x::BigFloat)::Tuple{BigInt, Int, Int}
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-133"></a>133</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isnan(x) &amp;&amp; return 0, 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-134"></a>134</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    isinf(x) &amp;&amp; return x.sign, 0, 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-135"></a>135</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    x == 0 &amp;&amp; return 0, 0, x.sign
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-136"></a>136</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s = BigInt()
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-137"></a>137</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s.size = cld(x.prec, 8*sizeof(GMP.Limb)) # limbs
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-138"></a>138</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    b = s.size * sizeof(GMP.Limb)            # bytes
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-139"></a>139</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ccall((:__gmpz_realloc2, :libgmp), Cvoid, (Ref{BigInt}, Culong), s, 8b) # bits
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-140"></a>140</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    ccall(:memcpy, Ptr{Cvoid}, (Ptr{Cvoid}, Ptr{Cvoid}, Csize_t), s.d, x.d, b) # bytes
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-141"></a>141</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    s, x.exp - 8b, x.sign
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-142"></a>142</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-143"></a>143</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-144"></a>144</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## streamlined hashing for smallish rational types ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-145"></a>145</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-146"></a>146</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function hash(x::Rational{&lt;:BitInteger64}, h::UInt)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-147"></a>147</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    num, den = Base.numerator(x), Base.denominator(x)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-148"></a>148</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    den == 1 &amp;&amp; return hash(num, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-149"></a>149</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    den == 0 &amp;&amp; return hash(ifelse(num &gt; 0, Inf, -Inf), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-150"></a>150</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if isodd(den)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-151"></a>151</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        pow = trailing_zeros(num)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-152"></a>152</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        num &gt;&gt;= pow
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-153"></a>153</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-154"></a>154</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        pow = trailing_zeros(den)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-155"></a>155</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        den &gt;&gt;= pow
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-156"></a>156</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        pow = -pow
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-157"></a>157</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        if den == 1 &amp;&amp; abs(num) &lt; 9007199254740992
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-158"></a>158</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">            return hash(ldexp(Float64(num),pow),h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-159"></a>159</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-160"></a>160</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-161"></a>161</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h = hash_integer(den, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-162"></a>162</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h = hash_integer(pow, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-163"></a>163</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h = hash_integer(num, h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-164"></a>164</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return h
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-165"></a>165</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-166"></a>166</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-167"></a>167</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## hashing Float16s ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-168"></a>168</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-169"></a>169</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">hash(x::Float16, h::UInt) = hash(Float64(x), h)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-170"></a>170</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-171"></a>171</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## hashing strings ##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-172"></a>172</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-173"></a>173</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">const memhash = UInt === UInt64 ? :memhash_seed : :memhash32_seed
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-174"></a>174</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">const memhash_seed = UInt === UInt64 ? 0x71e729fd56419c81 : 0x56419c81
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-175"></a>175</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-176"></a>176</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function hash(s::Union{String,SubString{String}}, h::UInt)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-177"></a>177</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    h += memhash_seed
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-178"></a>178</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    # note: use pointer(s) here (see #6058).
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-179"></a>179</td>
+          <td>3 (0.01%)</td>
+          <td>7 (0.03%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-hashing2-jl-hash-179"></a>
+              5 (0.02%) samples spent in hash<br />
+              1 (100.00%) (ex.),
+              5 (100.00%) (incl.)
+              when called from
+              hash
+              <a href="hashing-jl-6cff43c2d501212ea285-line.html#Lhashing-jl-6cff43c2d501212ea285-line.html-18">line 18</a><br />
+            </div>
+            <div class="callees">
+              4 (57.14%)
+              samples spent calling
+              <a href="string-jl-33e19517945c5b865681-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-strings-string-jl-sizeof-85">sizeof</a><br />
+            </div>
+            <span class="code">    ccall(memhash, UInt, (Ptr{UInt8}, Csize_t, UInt32), pointer(s), sizeof(s), h % UInt32) + h
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-180"></a>180</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lhashing2-jl-2c8a412eceea768d9ae6-line.html-181"></a>181</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">hash(s::AbstractString, h::UInt) = hash(String(s), h)
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

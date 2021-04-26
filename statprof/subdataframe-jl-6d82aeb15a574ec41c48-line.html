@@ -1,0 +1,1827 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="statprofiler.css">
+
+    <title>StatProfilerHTML.jl: C:\Users\Tims PC\.julia\packages\DataFrames\GtZ1l\src\subdataframe\subdataframe.jl</title>
+  </head>
+  <body>
+<div class="report-header">
+  <div class="backlink"><a href="index.html">Report index</a></div>
+  <div class="report-title">StatProfilerHTML.jl report</div>
+  <div class="generated-on">Generated on 04/18/21 14:38:38</div>
+</div>
+
+    <div id="body-content">
+      <table>
+        <caption>File source code</caption>
+        <tr>
+          <th>Line</td>
+          <th>Exclusive</th>
+          <th>Inclusive</th>
+          <th>Code</th>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-1"></a>1</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-2"></a>2</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame{&lt;:AbstractDataFrame,&lt;:AbstractIndex,&lt;:AbstractVector{Int}} &lt;: AbstractDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-3"></a>3</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-4"></a>4</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">A view of an `AbstractDataFrame`. It is returned by a call to the `view` function
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-5"></a>5</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">on an `AbstractDataFrame` if a collections of rows and columns are specified.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-6"></a>6</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-7"></a>7</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">A `SubDataFrame` is an `AbstractDataFrame`, so expect that most
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-8"></a>8</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">DataFrame functions should work. Such methods include `describe`,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-9"></a>9</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">`summary`, `nrow`, `size`, `by`, `stack`, and `join`.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-10"></a>10</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-11"></a>11</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">If the selection of columns in a parent data frame is passed as `:` (a colon)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-12"></a>12</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">then `SubDataFrame` will always have all columns from the parent,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-13"></a>13</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">even if they are added or removed after its creation.
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-14"></a>14</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-15"></a>15</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code"># Examples
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-16"></a>16</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```julia
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-17"></a>17</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">df = DataFrame(a = repeat([1, 2, 3, 4], outer=[2]),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-18"></a>18</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">               b = repeat([2, 1], outer=[4]),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-19"></a>19</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">               c = randn(8))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-20"></a>20</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">sdf1 = view(df, 2:3) # column subsetting
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-21"></a>21</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">sdf2 = @view df[end:-1:1, [1,3]]  # row and column subsetting
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-22"></a>22</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">sdf3 = groupby(df, :a)[1]  # indexing a GroupedDataFrame returns a SubDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-23"></a>23</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">```
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-24"></a>24</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">&quot;&quot;&quot;
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-25"></a>25</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">struct SubDataFrame{D&lt;:AbstractDataFrame,S&lt;:AbstractIndex,T&lt;:AbstractVector{Int}} &lt;: AbstractDataFrame
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-26"></a>26</td>
+          <td>9 (0.04%)</td>
+          <td>9 (0.04%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-Type-26"></a>
+              9 (0.04%) samples spent in Type<br />
+              9 (100.00%) (ex.),
+              9 (100.00%) (incl.)
+              when called from
+              view
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-91">line 91</a><br />
+            </div>
+            <span class="code">    parent::D
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-27"></a>27</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    colindex::S
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-28"></a>28</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    rows::T # maps from subdf row indexes to parent row indexes
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-29"></a>29</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-30"></a>30</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-31"></a>31</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function SubDataFrame(parent::DataFrame, rows::AbstractVector{Int}, cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-32"></a>32</td>
+          <td></td>
+          <td>8 (0.03%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-Type-32"></a>
+              8 (0.03%) samples spent in Type<br />
+              0 (ex.),
+              8 (100.00%) (incl.)
+              when called from
+              view
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-91">line 91</a><br />
+            </div>
+            <div class="callees">
+              1 (12.50%)
+              samples spent calling
+              <a href="abstractarray-jl-d025093206914fafebd6-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-abstractarray-jl-checkindex-572">checkindex</a><br />
+              1 (12.50%)
+              samples spent calling
+              <a href="abstractarray-jl-d025093206914fafebd6-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-abstractarray-jl-checkindex-573">checkindex</a><br />
+              6 (75.00%)
+              samples spent calling
+              <a href="abstractdataframe-jl-ee5a207caf943c4763ce-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-abstractdataframe-abstractdataframe-jl-axes-334">axes</a><br />
+            </div>
+            <span class="code">    @boundscheck if !checkindex(Bool, axes(parent, 1), rows)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-33"></a>33</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(BoundsError(parent, (rows, cols)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-34"></a>34</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-35"></a>35</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(parent, SubIndex(index(parent), cols), rows)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-36"></a>36</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-37"></a>37</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds SubDataFrame(parent::DataFrame, ::Colon, cols) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-38"></a>38</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(parent, axes(parent, 1), cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-39"></a>39</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@inline SubDataFrame(parent::DataFrame, row::Integer, cols) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-40"></a>40</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid row index: $row of type $(typeof(row))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-41"></a>41</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-42"></a>42</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function SubDataFrame(parent::DataFrame, rows::AbstractVector{&lt;:Integer}, cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-43"></a>43</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if any(x -&gt; x isa Bool, rows)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-44"></a>44</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;invalid row index of type `Bool`&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-45"></a>45</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-46"></a>46</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return SubDataFrame(parent, convert(Vector{Int}, rows), cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-47"></a>47</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-48"></a>48</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-49"></a>49</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function SubDataFrame(parent::DataFrame, rows::AbstractVector{Bool}, cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-50"></a>50</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if length(rows) != nrow(parent)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-51"></a>51</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;invalid length of `AbstractVector{Bool}` row index&quot; *
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-52"></a>52</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                            &quot; (got $(length(rows)), expected $(nrow(parent)))&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-53"></a>53</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-54"></a>54</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return SubDataFrame(parent, findall(rows), cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-55"></a>55</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-56"></a>56</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-57"></a>57</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function SubDataFrame(parent::DataFrame, rows::AbstractVector, cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-58"></a>58</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if !all(x -&gt; (x isa Integer) &amp;&amp; !(x isa Bool), rows)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-59"></a>59</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        throw(ArgumentError(&quot;only `Integer` indices are accepted in `rows`&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-60"></a>60</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-61"></a>61</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return SubDataFrame(parent, convert(Vector{Int}, rows), cols)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-62"></a>62</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-63"></a>63</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-64"></a>64</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds SubDataFrame(sdf::SubDataFrame, rowind, cols) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-65"></a>65</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(parent(sdf), rows(sdf)[rowind], parentcols(index(sdf), cols))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-66"></a>66</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds SubDataFrame(sdf::SubDataFrame, rowind::Bool, cols) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-67"></a>67</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid row index of type Bool&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-68"></a>68</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds SubDataFrame(sdf::SubDataFrame, rowind, ::Colon) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-69"></a>69</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if index(sdf) isa Index # sdf was created using : as row selector
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-70"></a>70</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        SubDataFrame(parent(sdf), rows(sdf)[rowind], :)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-71"></a>71</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-72"></a>72</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        SubDataFrame(parent(sdf), rows(sdf)[rowind], parentcols(index(sdf), :))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-73"></a>73</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-74"></a>74</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds SubDataFrame(sdf::SubDataFrame, rowind::Bool, ::Colon) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-75"></a>75</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid row index of type Bool&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-76"></a>76</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds SubDataFrame(sdf::SubDataFrame, ::Colon, cols) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-77"></a>77</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(parent(sdf), rows(sdf), parentcols(index(sdf), cols))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-78"></a>78</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@inline SubDataFrame(sdf::SubDataFrame, ::Colon, ::Colon) = sdf
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-79"></a>79</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-80"></a>80</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">rows(sdf::SubDataFrame) = getfield(sdf, :rows)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-81"></a>81</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.parent(sdf::SubDataFrame) = getfield(sdf, :parent)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-82"></a>82</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.parentindices(sdf::SubDataFrame) = (rows(sdf), parentcols(index(sdf)))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-83"></a>83</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-84"></a>84</td>
+          <td>6 (0.03%)</td>
+          <td>17 (0.07%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-view-84"></a>
+              17 (0.07%) samples spent in view<br />
+              6 (100.00%) (ex.),
+              17 (100.00%) (incl.)
+              when called from
+              getindex
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-121">line 121</a><br />
+            </div>
+            <div class="callees">
+              9 (52.94%)
+              samples spent calling
+              <a href="subarray-jl-c31719b97f9402269450-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-subarray-jl-view-154">view</a><br />
+              1 (5.88%)
+              samples spent calling
+              <a href="typeinfer-jl-0c05ed03c25851e2996d-line.html#SC-Users-Tims-PC-AppData-Local-Julia-1-2-0-bin-share-julia-base-compiler-typeinfer-jl-typeinf_ext-596">typeinf_ext</a><br />
+              1 (5.88%)
+              samples spent calling
+              <a href="dataframe-jl-28dd912318dda5b2c04b-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-dataframe-dataframe-jl-getindex-431">getindex</a><br />
+            </div>
+            <span class="code">Base.@propagate_inbounds Base.view(adf::AbstractDataFrame, rowinds, colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-85"></a>85</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    view(adf[!, colind], rowinds)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-86"></a>86</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.view(adf::AbstractDataFrame, ::typeof(!), colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-87"></a>87</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    view(adf[!, colind], :)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-88"></a>88</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">@inline Base.view(adf::AbstractDataFrame, rowinds, colind::Bool) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-89"></a>89</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid column index $colind of type `Bool`&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-90"></a>90</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.view(adf::AbstractDataFrame, rowinds,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-91"></a>91</td>
+          <td></td>
+          <td>17 (0.07%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-view-91"></a>
+              17 (0.07%) samples spent in view<br />
+              0 (ex.),
+              17 (100.00%) (incl.)
+              when called from
+              getindex
+              <a href="groupeddataframe-jl-20a281b3aadf29d8fdda-line.html#Lgroupeddataframe-jl-20a281b3aadf29d8fdda-line.html-200">line 200</a><br />
+            </div>
+            <div class="callees">
+              9 (52.94%)
+              samples spent calling
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-Type-26">Type</a><br />
+              8 (47.06%)
+              samples spent calling
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-Type-32">Type</a><br />
+            </div>
+            <span class="code">                                   colinds::MultiColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-92"></a>92</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(adf, rowinds, colinds)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-93"></a>93</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.view(adf::AbstractDataFrame, rowinds::typeof(!),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-94"></a>94</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                   colinds::MultiColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-95"></a>95</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(adf, :, colinds)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-96"></a>96</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.view(adf::AbstractDataFrame, rowinds::Not,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-97"></a>97</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                   colinds::MultiColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-98"></a>98</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    SubDataFrame(adf, axes(adf, 1)[rowinds], colinds)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-99"></a>99</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-100"></a>100</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##############################################################################
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-101"></a>101</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-102"></a>102</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## AbstractDataFrame interface
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-103"></a>103</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-104"></a>104</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##############################################################################
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-105"></a>105</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-106"></a>106</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">index(sdf::SubDataFrame) = getfield(sdf, :colindex)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-107"></a>107</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-108"></a>108</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">nrow(sdf::SubDataFrame) = ncol(sdf) &gt; 0 ? length(rows(sdf))::Int : 0
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-109"></a>109</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">ncol(sdf::SubDataFrame) = length(index(sdf))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-110"></a>110</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-111"></a>111</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, rowind::Integer, colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-112"></a>112</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf)[rowind], parentcols(index(sdf), colind)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-113"></a>113</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, rowind::Bool, colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-114"></a>114</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid row index of type Bool&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-115"></a>115</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-116"></a>116</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, rowinds::Union{AbstractVector, Not},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-117"></a>117</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                       colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-118"></a>118</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf)[rowinds], parentcols(index(sdf), colind)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-119"></a>119</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, ::Colon, colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-120"></a>120</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf), parentcols(index(sdf), colind)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-121"></a>121</td>
+          <td></td>
+          <td>20 (0.09%)</td>
+          <td>
+            <div class="call-sites">
+              <a name="SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-getindex-121"></a>
+              20 (0.09%) samples spent in getindex<br />
+              0 (ex.),
+              4 (20.00%) (incl.)
+              when called from
+              getindex
+              <a href="iteration-jl-bc244de7e9bf3237d364-line.html#Literation-jl-bc244de7e9bf3237d364-line.html-170">line 170</a><br />
+              0 (ex.),
+              16 (80.00%) (incl.)
+              when called from
+              getproperty
+              <a href="abstractdataframe-jl-ee5a207caf943c4763ce-line.html#Labstractdataframe-jl-ee5a207caf943c4763ce-line.html-346">line 346</a><br />
+            </div>
+            <div class="callees">
+              17 (85.00%)
+              samples spent calling
+              <a href="subdataframe-jl-6d82aeb15a574ec41c48-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-subdataframe-subdataframe-jl-view-84">view</a><br />
+              3 (15.00%)
+              samples spent calling
+              <a href="index-jl-9d4e1a199baa632c923a-line.html#SC-Users-Tims-PC-julia-packages-DataFrames-GtZ1l-src-other-index-jl-parentcols-342">parentcols</a><br />
+            </div>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, ::typeof(!), colind::ColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-122"></a>122</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    view(parent(sdf), rows(sdf), parentcols(index(sdf), colind))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-123"></a>123</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-124"></a>124</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, rowinds::Union{AbstractVector, Not},
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-125"></a>125</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                       colinds::MultiColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-126"></a>126</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf)[rowinds], parentcols(index(sdf), colinds)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-127"></a>127</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(sdf::SubDataFrame, ::Colon,
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-128"></a>128</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                       colinds::MultiColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-129"></a>129</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf), parentcols(index(sdf), colinds)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-130"></a>130</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.getindex(df::SubDataFrame, row_ind::typeof(!),
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-131"></a>131</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">                                       col_inds::MultiColumnIndex) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-132"></a>132</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    select(df, col_inds, copycols=false)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-133"></a>133</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-134"></a>134</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-135"></a>135</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function Base.setindex!(sdf::SubDataFrame, val::Any, idx::CartesianIndex{2})
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-136"></a>136</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    setindex!(sdf, val, idx[1], idx[2])
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-137"></a>137</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-138"></a>138</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function Base.setindex!(sdf::SubDataFrame, val::Any, ::Colon, colinds::Any)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-139"></a>139</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf), parentcols(index(sdf), colinds)] = val
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-140"></a>140</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return sdf
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-141"></a>141</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-142"></a>142</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function Base.setindex!(sdf::SubDataFrame, val::Any, ::typeof(!), colinds::Any)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-143"></a>143</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;setting index of SubDataFrame using ! as row selector is not allowed&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-144"></a>144</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-145"></a>145</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds function Base.setindex!(sdf::SubDataFrame, val::Any, rowinds::Any, colinds::Any)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-146"></a>146</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    parent(sdf)[rows(sdf)[rowinds], parentcols(index(sdf), colinds)] = val
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-147"></a>147</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    return sdf
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-148"></a>148</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-149"></a>149</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.@propagate_inbounds Base.setindex!(sdf::SubDataFrame, val::Any, rowinds::Bool, colinds::Any) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-150"></a>150</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;invalid row index of type Bool&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-151"></a>151</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-152"></a>152</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##############################################################################
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-153"></a>153</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-154"></a>154</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">## Miscellaneous
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-155"></a>155</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-156"></a>156</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">##############################################################################
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-157"></a>157</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-158"></a>158</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.copy(sdf::SubDataFrame) = parent(sdf)[rows(sdf), parentcols(index(sdf), :)]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-159"></a>159</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-160"></a>160</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.delete!(df::SubDataFrame, ind) =
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-161"></a>161</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    throw(ArgumentError(&quot;SubDataFrame does not support deleting rows&quot;))
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-162"></a>162</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-163"></a>163</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">function DataFrame(sdf::SubDataFrame; copycols::Bool=true)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-164"></a>164</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    if copycols
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-165"></a>165</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        sdf[:, :]
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-166"></a>166</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    else
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-167"></a>167</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">        DataFrame(eachcol(sdf), _names(sdf), copycols=false)
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-168"></a>168</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">    end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-169"></a>169</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">end
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-170"></a>170</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">
+</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a name="Lsubdataframe-jl-6d82aeb15a574ec41c48-line.html-171"></a>171</td>
+          <td></td>
+          <td></td>
+          <td>
+            <span class="code">Base.convert(::Type{DataFrame}, sdf::SubDataFrame) = DataFrame(sdf)
+</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
